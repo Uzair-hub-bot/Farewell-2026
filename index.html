@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Farewell – Class of 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a84c;--deep:#1a1a2e;--mid:#16213e;--accent:#0f3460;--light:#f5f0e8;--white:#ffffff;--soft:#faf8f4}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--soft);color:#2d2d2d;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:999;background:rgba(26,26,46,0.97);backdrop-filter:blur(10px);padding:14px 30px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo .logo-icon{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#e8c76d);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.nav-logo span{color:#fff;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.nav-links a:hover{color:var(--gold)}
+
+/* ── HERO / LANDING ── */
+.landing{min-height:100vh;background:linear-gradient(160deg,var(--deep) 0%,var(--accent) 60%,#1a3a6e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.landing::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E")}
+.confetti{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.school-logo-wrap{position:relative;z-index:2;margin-bottom:24px}
+.school-logo{width:130px;height:130px;border-radius:50%;border:4px solid var(--gold);background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));display:flex;align-items:center;justify-content:center;font-size:4rem;margin:0 auto 16px;box-shadow:0 0 60px rgba(201,168,76,.3),0 8px 40px rgba(0,0,0,.4)}
+.school-name{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;position:relative;z-index:2}
+.school-tagline{color:rgba(255,255,255,.55);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;position:relative;z-index:2}
+.landing h1{position:relative;z-index:2;font-family:'Playfair Display',serif;font-size:clamp(2.8rem,8vw,6rem);color:#fff;line-height:1.1;margin-bottom:10px}
+.landing h1 em{color:var(--gold);font-style:normal}
+.landing .class-badge{position:relative;z-index:2;display:inline-block;border:2px solid var(--gold);color:var(--gold);padding:10px 32px;border-radius:50px;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;margin:20px 0 36px}
+.landing-desc{position:relative;z-index:2;color:rgba(255,255,255,.8);font-size:1.05rem;max-width:600px;line-height:1.8;margin-bottom:40px}
+/* ── PHOTO SLIDER ── */
+.school-pics-slider{position:relative;z-index:2;width:100%;max-width:860px;margin-top:20px}
+.slider-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
+.slider-title-lbl{color:var(--gold);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;font-weight:600}
+.slider-add-btn{background:rgba(201,168,76,.15);border:1.5px solid var(--gold);color:var(--gold);border-radius:50px;padding:6px 18px;font-size:.75rem;letter-spacing:1px;cursor:pointer;transition:.2s;font-weight:600;text-transform:uppercase;white-space:nowrap}
+.slider-add-btn:hover{background:var(--gold);color:var(--deep)}
+.slider-viewport{position:relative;border-radius:18px;overflow:hidden;border:2.5px solid rgba(201,168,76,.35);box-shadow:0 8px 40px rgba(0,0,0,.45)}
+.slider-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100%;height:340px;position:relative;background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.02));display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide-placeholder{display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.45);z-index:1}
+.slide-placeholder span:first-child{font-size:3.5rem}
+.slide-placeholder span:last-child{font-size:.8rem;letter-spacing:1px}
+.slide-overlay{position:absolute;inset:0;background:rgba(0,0,0,.38);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;transition:.3s;z-index:2}
+.slide:hover .slide-overlay{opacity:1}
+.slide-overlay span:first-child{font-size:2.2rem}
+.slide-overlay span:last-child{color:#fff;font-size:.8rem;letter-spacing:1px}
+.slide-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);color:#fff;font-size:.8rem;letter-spacing:1.5px;text-align:center;padding:18px 12px 12px;z-index:3;font-weight:500}
+.slide-count-badge{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.55);color:var(--gold);border:1px solid rgba(201,168,76,.5);font-size:.7rem;padding:4px 10px;border-radius:50px;z-index:3;letter-spacing:1px}
+/* Nav arrows */
+.slider-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(0,0,0,.5);border:1.5px solid rgba(201,168,76,.5);color:var(--gold);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:1.2rem;backdrop-filter:blur(6px)}
+.slider-arrow:hover{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+.slider-arrow.prev{left:12px}
+.slider-arrow.next{right:12px}
+/* Dots */
+.slider-dots{display:flex;justify-content:center;gap:7px;margin-top:14px;flex-wrap:wrap}
+.slider-dot{width:9px;height:9px;border-radius:50%;background:rgba(201,168,76,.3);border:1.5px solid rgba(201,168,76,.4);cursor:pointer;transition:.25s}
+.slider-dot.active{background:var(--gold);border-color:var(--gold);transform:scale(1.25)}
+/* Thumbnail strip */
+.slider-thumbs{display:flex;gap:7px;margin-top:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.3) transparent}
+.slider-thumb{min-width:64px;height:44px;border-radius:8px;border:2px solid rgba(201,168,76,.3);background:rgba(255,255,255,.06);overflow:hidden;cursor:pointer;transition:.2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.slider-thumb img{width:100%;height:100%;object-fit:cover}
+.slider-thumb.active-thumb{border-color:var(--gold);transform:scale(1.05)}
+.upload-hint{font-size:.65rem;color:rgba(255,255,255,.85);letter-spacing:.5px}
+/* Teacher pic upload */
+.teacher-pic{position:relative}
+.teacher-pic .tp-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;cursor:pointer;font-size:.7rem;color:#fff;letter-spacing:.5px;flex-direction:column;gap:4px}
+.teacher-pic:hover .tp-overlay{opacity:1}
+.teacher-pic input[type=file]{display:none}
+/* Student avatar upload */
+.student-avatar{cursor:pointer;position:relative}
+.student-avatar .av-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;font-size:.65rem;color:#fff;text-align:center;padding:6px}
+.student-avatar:hover .av-overlay{opacity:1}
+.scroll-arrow{position:relative;z-index:2;margin-top:50px;color:rgba(255,255,255,.4);animation:bounce 2s infinite;cursor:pointer}
+.scroll-arrow svg{width:32px;height:32px}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ── SECTION COMMON ── */
+.section-head{text-align:center;margin-bottom:50px}
+.section-lbl{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
+.section-ttl{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--deep);line-height:1.2}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin:16px auto 0;border-radius:2px}
+
+/* ── STUDENTS ── */
+.students-section{padding:80px 20px;background:var(--soft)}
+.students-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;max-width:1100px;margin:0 auto}
+.student-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);transition:.3s;border:1px solid rgba(201,168,76,.15)}
+.student-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.15);border-color:var(--gold)}
+.student-card-top{background:linear-gradient(135deg,var(--deep),var(--accent));padding:28px 20px;text-align:center;position:relative}
+.student-avatar{width:100px;height:100px;border-radius:50%;border:4px solid var(--gold);margin:0 auto 14px;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.05));display:flex;align-items:center;justify-content:center;font-size:2.8rem;overflow:hidden}
+.student-avatar img{width:100%;height:100%;object-fit:cover}
+.student-name{color:#fff;font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:4px}
+.student-roll{color:var(--gold);font-size:.78rem;letter-spacing:2px;text-transform:uppercase}
+.student-body{padding:22px}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0ebe0;font-size:.85rem}
+.info-row:last-child{border-bottom:none}
+.info-label{color:#999;font-weight:500;font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+.info-val{color:var(--deep);font-weight:600;font-size:.88rem;text-align:right;max-width:60%}
+.marks-bar{margin-top:14px;padding-top:14px;border-top:1px solid #f0ebe0}
+.marks-label{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:8px}
+.bar-wrap{background:#f0ebe0;border-radius:50px;height:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--gold),#e8c76d)}
+.fav-teacher{margin-top:12px;background:linear-gradient(135deg,var(--deep),var(--accent));border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.fav-teacher span{font-size:1.2rem}
+.fav-teacher div p:first-child{font-size:.7rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px}
+.fav-teacher div p:last-child{font-size:.88rem;color:var(--gold);font-weight:600}
+
+/* ── TEACHERS ── */
+.teachers-section{padding:80px 20px;background:linear-gradient(160deg,var(--deep),var(--accent))}
+.teachers-section .section-ttl{color:#fff}
+.teachers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:32px;max-width:1100px;margin:0 auto}
+.teacher-card{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.25);border-radius:22px;overflow:hidden;transition:.3s}
+.teacher-card:hover{background:rgba(255,255,255,.1);border-color:var(--gold);transform:translateY(-6px)}
+.teacher-pics{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;height:180px}
+.teacher-pic{background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:2rem;overflow:hidden;cursor:pointer;transition:.2s}
+.teacher-pic:first-child{grid-row:span 2;font-size:3rem}
+.teacher-pic:hover{background:rgba(201,168,76,.15)}
+.teacher-pic img{width:100%;height:100%;object-fit:cover}
+.teacher-body{padding:24px}
+.teacher-name{font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:4px}
+.teacher-subject{color:var(--gold);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+.teacher-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.t-info{background:rgba(255,255,255,.05);border-radius:10px;padding:10px 12px}
+.t-info-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:3px}
+.t-info-val{font-size:.85rem;color:#fff;font-weight:500}
+.teacher-quote{background:rgba(201,168,76,.1);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:14px 16px;font-size:.9rem;line-height:1.7;color:rgba(255,255,255,.85);font-style:italic}
+.teacher-degree{display:inline-block;background:var(--gold);color:var(--deep);font-size:.7rem;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:50px;margin-bottom:14px;text-transform:uppercase}
+
+/* ── VIDEOS ── */
+.videos-section{padding:80px 20px;background:var(--soft)}
+.videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;max-width:1100px;margin:0 auto}
+.video-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid rgba(201,168,76,.15);transition:.3s;cursor:pointer}
+.video-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.14);border-color:var(--gold)}
+.video-thumb{height:170px;background:linear-gradient(135deg,var(--mid),var(--accent));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.play-btn{width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,.9);display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:.2s}
+.video-card:hover .play-btn{transform:scale(1.12);background:var(--gold)}
+.video-label{padding:16px 18px}
+.video-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--deep);margin-bottom:4px}
+.video-sub{font-size:.8rem;color:#999}
+.add-media{border:2px dashed #d0c8b8;background:transparent;color:#bbb;cursor:pointer}
+.add-media:hover{border-color:var(--gold);color:var(--gold)}
+.add-media .video-thumb{background:rgba(201,168,76,.05)}
+
+/* ── FOOTER ── */
+footer{background:var(--deep);color:rgba(255,255,255,.45);text-align:center;padding:50px 20px 30px;font-size:.85rem;line-height:1.8}
+footer .footer-logo{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:10px}
+footer span{color:var(--gold)}
+.footer-links{display:flex;gap:24px;justify-content:center;margin:18px 0;list-style:none;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.footer-links a:hover{color:var(--gold)}
+
+/* ── ADMIN BAR ── */
+.admin-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:1000;background:linear-gradient(90deg,var(--deep),var(--accent));border-top:2px solid var(--gold);padding:10px 24px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-bar.visible{display:flex}
+.admin-bar-left{display:flex;align-items:center;gap:10px}
+.admin-badge{background:var(--gold);color:var(--deep);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:1px;text-transform:uppercase}
+.admin-mode-label{color:rgba(255,255,255,.7);font-size:.8rem}
+.admin-bar-right{display:flex;gap:10px;flex-wrap:wrap}
+.admin-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;padding:7px 16px;border-radius:8px;font-size:.78rem;cursor:pointer;transition:.2s;letter-spacing:.5px}
+.admin-btn:hover{background:rgba(201,168,76,.2);border-color:var(--gold);color:var(--gold)}
+.admin-btn.danger{border-color:rgba(255,100,100,.4);color:rgba(255,150,150,.8)}
+.admin-btn.danger:hover{background:rgba(255,80,80,.15);border-color:#ff6464;color:#ff6464}
+
+/* ── FLOATING ACTION BUTTONS ── */
+.fab-group{position:fixed;right:22px;bottom:80px;display:flex;flex-direction:column;gap:10px;z-index:998}
+.fab{width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:.25s;position:relative}
+.fab:hover{transform:scale(1.12)}
+.fab-share{background:linear-gradient(135deg,var(--gold),#e8c76d);color:var(--deep)}
+.fab-admin{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:var(--gold);border:1.5px solid var(--gold)}
+.fab-auth{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;border:1.5px solid rgba(255,255,255,.2)}
+.fab-tip{position:absolute;right:60px;background:rgba(0,0,0,.8);color:#fff;font-size:.7rem;padding:5px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0;transition:.2s}
+.fab:hover .fab-tip{opacity:1}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:linear-gradient(160deg,var(--deep),var(--mid));border:1px solid rgba(201,168,76,.3);border-radius:22px;padding:36px;width:100%;max-width:440px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+.modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;transition:.2s}
+.modal-close:hover{color:var(--gold)}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:6px}
+.modal-sub{font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:26px;line-height:1.6}
+.modal-input{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;padding:12px 16px;font-size:.9rem;margin-bottom:14px;outline:none;transition:.2s;font-family:'Inter',sans-serif}
+.modal-input:focus{border-color:var(--gold);background:rgba(201,168,76,.08)}
+.modal-input::placeholder{color:rgba(255,255,255,.3)}
+.modal-btn{width:100%;background:linear-gradient(135deg,var(--gold),#e8c76d);color:var(--deep);border:none;border-radius:10px;padding:13px;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s;letter-spacing:.5px;margin-top:4px}
+.modal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.modal-btn.secondary{background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.15);margin-top:10px}
+.modal-btn.secondary:hover{border-color:var(--gold);color:var(--gold)}
+.modal-divider{text-align:center;color:rgba(255,255,255,.3);font-size:.78rem;margin:14px 0;letter-spacing:1px}
+.modal-msg{font-size:.82rem;text-align:center;margin-top:12px;padding:10px;border-radius:8px;display:none}
+.modal-msg.error{background:rgba(255,80,80,.12);color:#ff9090;border:1px solid rgba(255,80,80,.2);display:block}
+.modal-msg.success{background:rgba(80,200,120,.12);color:#80e0a0;border:1px solid rgba(80,200,120,.2);display:block}
+.modal-tabs{display:flex;gap:0;margin-bottom:24px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.modal-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-size:.82rem;color:rgba(255,255,255,.5);background:rgba(255,255,255,.04);transition:.2s;letter-spacing:.5px}
+.modal-tab.active{background:var(--gold);color:var(--deep);font-weight:700}
+
+/* ── SHARE MODAL SPECIFICS ── */
+.share-url-box{display:flex;gap:8px;margin-bottom:16px}
+.share-url-input{flex:1;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.7);padding:10px 14px;font-size:.82rem;outline:none;font-family:'Inter',sans-serif}
+.share-copy-btn{background:var(--gold);color:var(--deep);border:none;border-radius:10px;padding:10px 16px;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s}
+.share-copy-btn:hover{opacity:.85}
+.share-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.share-opt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s;text-decoration:none}
+.share-opt:hover{border-color:var(--gold);background:rgba(201,168,76,.1)}
+.share-opt-icon{font-size:1.6rem;margin-bottom:5px}
+.share-opt-label{font-size:.72rem;color:rgba(255,255,255,.6);letter-spacing:.5px}
+.qr-box{background:rgba(255,255,255,.95);border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:center;margin:14px auto;width:160px;height:160px}
+.qr-box canvas{width:136px!important;height:136px!important}
+
+/* ── FRIEND MEMORIES SECTION ── */
+.memories-section{padding:80px 20px;background:var(--soft)}
+.memories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.memory-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid rgba(201,168,76,.12);transition:.3s}
+.memory-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.12);border-color:var(--gold)}
+.memory-img{width:100%;height:180px;object-fit:cover;display:block}
+.memory-body{padding:14px 16px}
+.memory-author{font-weight:700;color:var(--deep);font-size:.9rem;margin-bottom:2px}
+.memory-caption{font-size:.82rem;color:#888;line-height:1.5}
+.memory-date{font-size:.7rem;color:#bbb;margin-top:6px}
+.memory-upload-card{border:2px dashed rgba(201,168,76,.35);background:rgba(201,168,76,.03);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px 20px;cursor:pointer;transition:.3s;color:var(--gold)}
+.memory-upload-card:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+.memory-upload-card span:first-child{font-size:2.5rem}
+.memory-upload-card span:last-child{font-size:.82rem;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.auth-required-msg{text-align:center;padding:30px;color:#aaa;font-size:.9rem}
+.auth-required-msg span{font-size:2rem;display:block;margin-bottom:10px}
+
+/* ── NAV USER STATUS ── */
+.nav-user-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:5px 14px 5px 8px;cursor:pointer;transition:.2s}
+.nav-user-pill:hover{border-color:var(--gold)}
+.nav-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--deep)}
+.nav-user-name{color:rgba(255,255,255,.7);font-size:.75rem;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── EDIT MODE HIGHLIGHTS ── */
+body.edit-mode .info-val[contenteditable]{outline:1.5px dashed rgba(201,168,76,.5);border-radius:4px;padding:2px 6px;cursor:text}
+body.edit-mode .info-val[contenteditable]:hover{outline-color:var(--gold);background:rgba(201,168,76,.07)}
+body.edit-mode .info-val[contenteditable]:focus{outline:2px solid var(--gold);background:rgba(201,168,76,.1)}
+body.edit-mode .student-name[contenteditable],.edit-mode .teacher-name[contenteditable]{outline:1.5px dashed rgba(201,168,76,.6);border-radius:4px;padding:2px 8px;cursor:text}
+.edit-mode-ribbon{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--deep);font-size:.72rem;font-weight:700;letter-spacing:2px;padding:5px 20px;border-radius:0 0 12px 12px;z-index:997;text-transform:uppercase}
+body.edit-mode .edit-mode-ribbon{display:block}
+
+/* ── TOAST NOTIFICATIONS ── */
+.toast-container{position:fixed;top:80px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--deep);border:1px solid rgba(201,168,76,.4);color:#fff;padding:12px 18px;border-radius:12px;font-size:.82rem;display:flex;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.4);animation:toastIn .3s ease;pointer-events:all;max-width:300px}
+.toast.success{border-color:rgba(80,200,120,.5)}
+.toast.error{border-color:rgba(255,80,80,.5)}
+@keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#top">
+    <div class="logo-icon">🏫</div>
+    <span>[School Name]</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#students">Students</a></li>
+    <li><a href="#teachers">Teachers</a></li>
+    <li><a href="#videos">Memories</a></li>
+    <li><a href="#friend-memories">Friends</a></li>
+  </ul>
+  <div id="navUserPill" class="nav-user-pill" onclick="openAuthModal()" style="display:none">
+    <div class="nav-user-avatar" id="navAvatar">?</div>
+    <span class="nav-user-name" id="navUserName">Sign In</span>
+  </div>
+</nav>
+
+<!-- Edit mode ribbon -->
+<div class="edit-mode-ribbon">✏️ Edit Mode Active</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── FLOATING ACTION BUTTONS ── -->
+<div class="fab-group">
+  <button class="fab fab-share" onclick="openShareModal()" title="Share">
+    🔗
+    <span class="fab-tip">Share Page</span>
+  </button>
+  <button class="fab fab-auth" id="fabAuth" onclick="openAuthModal()" title="Sign In">
+    👤
+    <span class="fab-tip">Sign In / Up</span>
+  </button>
+  <button class="fab fab-admin" onclick="openAdminModal()" title="Admin">
+    🔐
+    <span class="fab-tip">Admin Login</span>
+  </button>
+</div>
+
+<!-- ── ADMIN BAR ── -->
+<div class="admin-bar" id="adminBar">
+  <div class="admin-bar-left">
+    <span class="admin-badge">Admin</span>
+    <span class="admin-mode-label">Edit Mode — click any text to edit</span>
+  </div>
+  <div class="admin-bar-right">
+    <button class="admin-btn" onclick="saveChanges()">💾 Save Changes</button>
+    <button class="admin-btn danger" onclick="exitAdminMode()">✕ Exit</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: ADMIN LOGIN
+══════════════════════════════ -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
+    <div class="modal-title">🔐 Admin Access</div>
+    <div class="modal-sub">Enter your admin password to unlock editing mode. Only you should know this.</div>
+    <input class="modal-input" type="password" id="adminPassInput" placeholder="Admin password" onkeydown="if(event.key==='Enter')verifyAdmin()">
+    <button class="modal-btn" onclick="verifyAdmin()">Unlock Edit Mode</button>
+    <div class="modal-msg" id="adminMsg"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: AUTH (Sign In / Sign Up)
+══════════════════════════════ -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    <div class="modal-title">👋 Welcome</div>
+    <div class="modal-sub">Sign in or create an account to upload your own memories to this farewell page.</div>
+    <div class="modal-tabs">
+      <div class="modal-tab active" id="tabSignIn" onclick="switchAuthTab('signin')">Sign In</div>
+      <div class="modal-tab" id="tabSignUp" onclick="switchAuthTab('signup')">Sign Up</div>
+    </div>
+    <div id="authSignInForm">
+      <input class="modal-input" type="email" id="siEmail" placeholder="Your email address">
+      <input class="modal-input" type="password" id="siPassword" placeholder="Password">
+      <button class="modal-btn" onclick="signIn()">Sign In</button>
+      <button class="modal-btn secondary" onclick="signOut()" id="signOutBtn" style="display:none">Sign Out</button>
+    </div>
+    <div id="authSignUpForm" style="display:none">
+      <input class="modal-input" type="text" id="suName" placeholder="Your name (shown on memories)">
+      <input class="modal-input" type="email" id="suEmail" placeholder="Your email address">
+      <input class="modal-input" type="password" id="suPassword" placeholder="Choose a password (min 6 chars)">
+      <button class="modal-btn" onclick="signUp()">Create Account</button>
+    </div>
+    <div class="modal-msg" id="authMsg"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: SHARE
+══════════════════════════════ -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('shareModal')">✕</button>
+    <div class="modal-title">🔗 Share This Page</div>
+    <div class="modal-sub">Share with your classmates so they can view and add their memories!</div>
+    <div class="share-url-box">
+      <input class="share-url-input" id="shareUrlInput" readonly>
+      <button class="share-copy-btn" onclick="copyShareUrl()">Copy</button>
+    </div>
+    <div class="share-options">
+      <a class="share-opt" id="shareWhatsapp" href="#" target="_blank">
+        <div class="share-opt-icon">💬</div>
+        <div class="share-opt-label">WhatsApp</div>
+      </a>
+      <a class="share-opt" id="shareEmail" href="#" target="_blank">
+        <div class="share-opt-icon">📧</div>
+        <div class="share-opt-label">Email</div>
+      </a>
+      <div class="share-opt" onclick="copyShareUrl()">
+        <div class="share-opt-icon">📋</div>
+        <div class="share-opt-label">Copy Link</div>
+      </div>
+      <div class="share-opt" onclick="nativeShare()">
+        <div class="share-opt-icon">📲</div>
+        <div class="share-opt-label">More Options</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:18px">
+      <p style="color:rgba(255,255,255,.4);font-size:.72rem;letter-spacing:1px;margin-bottom:10px">QR CODE</p>
+      <div class="qr-box" id="qrBox"><canvas id="qrCanvas"></canvas></div>
+      <p style="color:rgba(255,255,255,.35);font-size:.7rem;margin-top:6px">Scan to open on any phone</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL: FRIEND MEMORY UPLOAD
+══════════════════════════════ -->
+<div class="modal-overlay" id="memoryUploadModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('memoryUploadModal')">✕</button>
+    <div class="modal-title">📸 Add Your Memory</div>
+    <div class="modal-sub">Share a photo from your school days with the class!</div>
+    <div id="memUploadPreviewWrap" style="display:none;margin-bottom:14px;border-radius:12px;overflow:hidden;height:180px">
+      <img id="memUploadPreview" style="width:100%;height:100%;object-fit:cover">
+    </div>
+    <input type="file" id="memFileInput" accept="image/*" style="display:none" onchange="previewMemory(this)">
+    <button class="modal-btn secondary" onclick="document.getElementById('memFileInput').click()">📷 Choose Photo</button>
+    <input class="modal-input" type="text" id="memCaption" placeholder="Write a caption (optional)" style="margin-top:14px">
+    <button class="modal-btn" onclick="submitMemory()" style="margin-top:6px">Upload Memory ✨</button>
+    <div class="modal-msg" id="memMsg"></div>
+  </div>
+</div>
+
+<!-- LANDING / HERO -->
+<div class="landing" id="top">
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+
+  <div class="school-logo-wrap">
+    <div class="school-logo">🏫</div>
+    <p class="school-name">[Your School Name]</p>
+    <p class="school-tagline">Est. [Year] · [City, Country]</p>
+  </div>
+
+  <h1>Farewell,<br/><em>Class of 2025</em> 🎓</h1>
+  <div class="class-badge">Batch 2020 – 2025</div>
+  <p class="landing-desc">From the very first bell to the very last — every moment, every lesson, every friendship has shaped who you are today. This page is a tribute to an extraordinary class and the teachers who guided them.</p>
+
+  <!-- HIDDEN FILE INPUT FOR ADDING NEW SLIDES -->
+  <input type="file" id="sliderAddInput" accept="image/*" multiple style="display:none" onchange="handleAddSlides(this)">
+
+  <div class="school-pics-slider" id="schoolSlider">
+    <div class="slider-header">
+      <span class="slider-title-lbl">📸 School Memories</span>
+      <button class="slider-add-btn" onclick="document.getElementById('sliderAddInput').click()">+ Add Photos</button>
+    </div>
+
+    <div class="slider-viewport">
+      <button class="slider-arrow prev" onclick="sliderMove(-1)">&#8249;</button>
+      <div class="slider-track" id="sliderTrack">
+
+        <!-- SLIDE 1 -->
+        <div class="slide" onclick="triggerSlideUpload(0)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,0)">
+          <div class="slide-placeholder"><span>🏛️</span><span>School Building</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">School Building</div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide" onclick="triggerSlideUpload(1)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,1)">
+          <div class="slide-placeholder"><span>📚</span><span>Library</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Library</div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide" onclick="triggerSlideUpload(2)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,2)">
+          <div class="slide-placeholder"><span>🏟️</span><span>Sports Ground</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Sports Ground</div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide" onclick="triggerSlideUpload(3)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,3)">
+          <div class="slide-placeholder"><span>🎭</span><span>Auditorium</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Auditorium</div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide" onclick="triggerSlideUpload(4)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,4)">
+          <div class="slide-placeholder"><span>🔬</span><span>Science Lab</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Science Lab</div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide" onclick="triggerSlideUpload(5)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,5)">
+          <div class="slide-placeholder"><span>💻</span><span>Computer Lab</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Computer Lab</div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide" onclick="triggerSlideUpload(6)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,6)">
+          <div class="slide-placeholder"><span>🎨</span><span>Art Room</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Art Room</div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide" onclick="triggerSlideUpload(7)">
+          <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,7)">
+          <div class="slide-placeholder"><span>🎉</span><span>Farewell Party</span></div>
+          <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
+          <div class="slide-label">Farewell Party</div>
+        </div>
+
+      </div>
+      <button class="slider-arrow next" onclick="sliderMove(1)">&#8250;</button>
+      <div class="slide-count-badge" id="slideCountBadge">1 / 8</div>
+    </div>
+
+    <!-- DOTS -->
+    <div class="slider-dots" id="sliderDots"></div>
+
+    <!-- THUMBNAIL STRIP -->
+    <div class="slider-thumbs" id="sliderThumbs"></div>
+  </div>
+
+  <!-- old school-pic divs removed — kept one dummy div for JS compat -->
+  <div class="school-pics" style="display:none">
+    <div class="school-pic" onclick="triggerSchoolPicUpload(this,'school-0')">
+      <input type="file" accept="image/*" style="display:none" onchange="handleSchoolPic(this)">
+      <span id="sp-icon-0">🏛️</span>
+      <span id="sp-text-0" style="font-size:.75rem">School Building</span>
+      <div class="pic-overlay"><span style="font-size:1.3rem">📷</span><span class="upload-hint">Upload Photo</span></div>
+    </div>
+  </div>
+
+  <div class="scroll-arrow" onclick="document.getElementById('students').scrollIntoView({behavior:'smooth'})">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+  </div>
+</div>
+
+<!-- STUDENTS SECTION -->
+<section class="students-section" id="students">
+  <div class="section-head">
+    <p class="section-lbl">Class of 2025</p>
+    <h2 class="section-ttl">Our Graduating Students</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="students-grid">
+
+    <!-- STUDENT CARD 1 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 1]</p>
+        <p class="student-roll">Roll No. 001</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[60 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Engineer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[850/1000] — 85%</p><div class="bar-wrap"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 2 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 2]</p>
+        <p class="student-roll">Roll No. 002</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[52 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Architect]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[920/1000] — 92%</p><div class="bar-wrap"><div class="bar-fill" style="width:92%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 3 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 3]</p>
+        <p class="student-roll">Roll No. 003</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[72 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Business]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[780/1000] — 78%</p><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 4 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 4]</p>
+        <p class="student-roll">Roll No. 004</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[55 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Doctor]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[910/1000] — 91%</p><div class="bar-wrap"><div class="bar-fill" style="width:91%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 5 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 5]</p>
+        <p class="student-roll">Roll No. 005</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[68 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Lawyer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[800/1000] — 80%</p><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 6 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 6]</p>
+        <p class="student-roll">Roll No. 006</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[50 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Scientist]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[955/1000] — 95%</p><div class="bar-wrap"><div class="bar-fill" style="width:95%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 7 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 7]</p>
+        <p class="student-roll">Roll No. 007</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[75 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Pilot]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[760/1000] — 76%</p><div class="bar-wrap"><div class="bar-fill" style="width:76%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 8 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 8]</p>
+        <p class="student-roll">Roll No. 008</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[53 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Artist / Designer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[870/1000] — 87%</p><div class="bar-wrap"><div class="bar-fill" style="width:87%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 9 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 9]</p>
+        <p class="student-roll">Roll No. 009</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[70 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Software Dev]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[930/1000] — 93%</p><div class="bar-wrap"><div class="bar-fill" style="width:93%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 10 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 10]</p>
+        <p class="student-roll">Roll No. 010</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[48 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Teacher]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[885/1000] — 88%</p><div class="bar-wrap"><div class="bar-fill" style="width:88%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 11 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 11]</p>
+        <p class="student-roll">Roll No. 011</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[65 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Accountant]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[820/1000] — 82%</p><div class="bar-wrap"><div class="bar-fill" style="width:82%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 12 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 12]</p>
+        <p class="student-roll">Roll No. 012</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[51 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Nurse]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[896/1000] — 89%</p><div class="bar-wrap"><div class="bar-fill" style="width:89%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 13 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 13]</p>
+        <p class="student-roll">Roll No. 013</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[73 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Banker]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[740/1000] — 74%</p><div class="bar-wrap"><div class="bar-fill" style="width:74%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 14 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 14]</p>
+        <p class="student-roll">Roll No. 014</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[49 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Journalist]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[905/1000] — 90%</p><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 15 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 15]</p>
+        <p class="student-roll">Roll No. 015</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[67 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Pharmacist]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[860/1000] — 86%</p><div class="bar-wrap"><div class="bar-fill" style="width:86%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 16 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 16]</p>
+        <p class="student-roll">Roll No. 016</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[54 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Psychologist]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[940/1000] — 94%</p><div class="bar-wrap"><div class="bar-fill" style="width:94%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 17 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 17]</p>
+        <p class="student-roll">Roll No. 017</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[71 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Civil Engineer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[810/1000] — 81%</p><div class="bar-wrap"><div class="bar-fill" style="width:81%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 18 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 18]</p>
+        <p class="student-roll">Roll No. 018</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[47 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Dentist]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[920/1000] — 92%</p><div class="bar-wrap"><div class="bar-fill" style="width:92%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 19 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 19]</p>
+        <p class="student-roll">Roll No. 019</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[69 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Economist]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[830/1000] — 83%</p><div class="bar-wrap"><div class="bar-fill" style="width:83%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 20 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 20]</p>
+        <p class="student-roll">Roll No. 020</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[52 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Fashion Designer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[875/1000] — 87%</p><div class="bar-wrap"><div class="bar-fill" style="width:87%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 21 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 21]</p>
+        <p class="student-roll">Roll No. 021</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[66 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Army Officer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[790/1000] — 79%</p><div class="bar-wrap"><div class="bar-fill" style="width:79%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 22 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 22]</p>
+        <p class="student-roll">Roll No. 022</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[50 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Veterinarian]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[915/1000] — 91%</p><div class="bar-wrap"><div class="bar-fill" style="width:91%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 23 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 23]</p>
+        <p class="student-roll">Roll No. 023</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[74 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Electrical Eng.]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[850/1000] — 85%</p><div class="bar-wrap"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 24 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 24]</p>
+        <p class="student-roll">Roll No. 024</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[17 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[48 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Author / Writer]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[950/1000] — 95%</p><div class="bar-wrap"><div class="bar-fill" style="width:95%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- STUDENT CARD 25 -->
+    <div class="student-card">
+      <div class="student-card-top">
+        <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
+        <p class="student-name">[Student Name 25]</p>
+        <p class="student-roll">Roll No. 025</p>
+      </div>
+      <div class="student-body">
+        <div class="info-row"><span class="info-label">Age</span><span class="info-val">[18 years]</span></div>
+        <div class="info-row"><span class="info-label">Father's Name</span><span class="info-val">[Father Name]</span></div>
+        <div class="info-row"><span class="info-label">Address</span><span class="info-val">[City, Country]</span></div>
+        <div class="info-row"><span class="info-label">Phone</span><span class="info-val">[+XX XXX XXXX]</span></div>
+        <div class="info-row"><span class="info-label">Weight</span><span class="info-val">[63 kg]</span></div>
+        <div class="info-row"><span class="info-label">Career Goal</span><span class="info-val">[Entrepreneur]</span></div>
+        <div class="marks-bar"><p class="marks-label">Previous Class Marks</p><p style="font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:6px">[900/1000] — 90%</p><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></div>
+        <div class="fav-teacher"><span>⭐</span><div><p>Favourite Teacher</p><p>[Teacher Name]</p></div></div>
+      </div>
+    </div>
+
+    <!-- ADD MORE STUDENTS CARD -->
+    <div class="student-card" style="border:2px dashed #d0c8b8;background:transparent;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:200px;cursor:pointer;color:#bbb;transition:.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='#d0c8b8';this.style.color='#bbb'">
+      <span style="font-size:2.5rem">➕</span>
+      <p style="font-size:.9rem;letter-spacing:1px;text-transform:uppercase">Add Student</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- TEACHERS SECTION -->
+<section class="teachers-section" id="teachers">
+  <div class="section-head">
+    <p class="section-lbl" style="color:rgba(201,168,76,.8)">The Guiding Stars</p>
+    <h2 class="section-ttl" style="color:#fff">Our Beloved Teachers</h2>
+    <div class="divider" style="background:linear-gradient(90deg,var(--gold),transparent)"></div>
+  </div>
+  <div class="teachers-grid">
+
+    <!-- TEACHER 1 -->
+    <div class="teacher-card">
+      <div class="teacher-pics">
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👩‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📚<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🎓<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+      </div>
+      <div class="teacher-body">
+        <p class="teacher-name">[Teacher Name 1]</p>
+        <div class="teacher-degree">[M.Sc Mathematics]</div>
+        <p class="teacher-subject">Mathematics & Statistics</p>
+        <div class="teacher-info-grid">
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.Sc, B.Ed</p></div>
+          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[12 Years]</p></div>
+        </div>
+        <div class="teacher-quote">"Watching this class grow has been the greatest reward of my teaching career. Your curiosity and dedication will take you to heights I can only dream of. Go change the world — I know you will."</div>
+      </div>
+    </div>
+    <!-- TEACHER 2 -->
+    <div class="teacher-card">
+      <div class="teacher-pics">
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🔬<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">⚗️<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📖<div class="tp-overlay">📷<span>Upload</span></div></div>
+      </div>
+      <div class="teacher-body">
+        <p class="teacher-name">[Teacher Name 2]</p>
+        <div class="teacher-degree">[M.Sc Physics]</div>
+        <p class="teacher-subject">Physics & Chemistry</p>
+        <div class="teacher-info-grid">
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.Sc, Ph.D</p></div>
+          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[18 Years]</p></div>
+        </div>
+        <div class="teacher-quote">"Every experiment you ran in my lab taught you something beyond science — it taught you patience, precision, and perseverance. Take those lessons forward. The universe has a wonderful plan for each of you."</div>
+      </div>
+    </div>
+
+    <!-- TEACHER 3 -->
+    <div class="teacher-card">
+      <div class="teacher-pics">
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👩‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">✍️<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📝<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🌍<div class="tp-overlay">📷<span>Upload</span></div></div>
+      </div>
+      <div class="teacher-body">
+        <p class="teacher-name">[Teacher Name 3]</p>
+        <div class="teacher-degree">[M.A English Literature]</div>
+        <p class="teacher-subject">English & Social Studies</p>
+        <div class="teacher-info-grid">
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.A, B.Ed</p></div>
+          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[9 Years]</p></div>
+        </div>
+        <div class="teacher-quote">"Every word you wrote, every essay you crafted — told me a story of brilliant minds growing brighter. You were never just my students; you were my daily inspiration. Fly high, dear ones."</div>
+      </div>
+    </div>
+
+    <!-- TEACHER 4 -->
+    <div class="teacher-card">
+      <div class="teacher-pics">
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">💻<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🖥️<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🤖<div class="tp-overlay">📷<span>Upload</span></div></div>
+      </div>
+      <div class="teacher-body">
+        <p class="teacher-name">[Teacher Name 4]</p>
+        <div class="teacher-degree">[M.Sc Computer Science]</div>
+        <p class="teacher-subject">Computer Science & IT</p>
+        <div class="teacher-info-grid">
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.Sc, MPhil</p></div>
+          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[7 Years]</p></div>
+        </div>
+        <div class="teacher-quote">"In this age of technology, you are the future builders of the digital world. I watched you debug your first programs, solve your first algorithms — and felt pride every single time. Keep building, keep creating."</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VIDEOS SECTION -->
+<section class="videos-section" id="videos">
+  <div class="section-head">
+    <p class="section-lbl">Moving Memories</p>
+    <h2 class="section-ttl">Videos & Highlights</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="videos-grid" style="max-width:1100px;margin:0 auto">
+
+    <div class="video-card">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+        <div style="position:absolute;top:12px;left:12px;background:var(--gold);color:var(--deep);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:1px;text-transform:uppercase">Highlight</div>
+      </div>
+      <div class="video-label">
+        <p class="video-title">Graduation Ceremony 2025</p>
+        <p class="video-sub">The unforgettable farewell event</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-thumb" style="background:linear-gradient(135deg,#1a3a6e,#0f3460)">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-label">
+        <p class="video-title">Annual Sports Day</p>
+        <p class="video-sub">Champions on the field</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-thumb" style="background:linear-gradient(135deg,#2d1a5e,#1a1a2e)">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-label">
+        <p class="video-title">Science Exhibition</p>
+        <p class="video-sub">Innovators in action</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-thumb" style="background:linear-gradient(135deg,#1a3d2e,#0f3460)">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-label">
+        <p class="video-title">Cultural Night</p>
+        <p class="video-sub">Dance, music & performances</p>
+      </div>
+    </div>
+
+    <div class="video-card add-media">
+      <div class="video-thumb" style="background:transparent;border:none">
+        <div style="text-align:center;color:#ccc">
+          <p style="font-size:2.5rem;margin-bottom:8px">🎬</p>
+          <p style="font-size:.8rem;letter-spacing:1px;text-transform:uppercase">Add a Video</p>
+        </div>
+      </div>
+      <div class="video-label">
+        <p class="video-title" style="color:#bbb">Upload Your Memory</p>
+        <p class="video-sub">Click to add a video</p>
+      </div>
+    </div>
+
+    <div class="video-card add-media">
+      <div class="video-thumb" style="background:transparent;border:none">
+        <div style="text-align:center;color:#ccc">
+          <p style="font-size:2.5rem;margin-bottom:8px">📸</p>
+          <p style="font-size:.8rem;letter-spacing:1px;text-transform:uppercase">Add a Photo</p>
+        </div>
+      </div>
+      <div class="video-label">
+        <p class="video-title" style="color:#bbb">Photo Memory</p>
+        <p class="video-sub">Click to add a photo</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FRIEND MEMORIES SECTION -->
+<section class="memories-section" id="friend-memories">
+  <div class="section-head">
+    <p class="section-lbl">From the Class</p>
+    <h2 class="section-ttl">Friend Memories</h2>
+    <div class="divider"></div>
+    <p style="color:#888;font-size:.9rem;margin-top:14px;max-width:500px;margin-inline:auto;line-height:1.7">
+      Sign in to add your own photo memory. Every classmate can share a moment! 📸
+    </p>
+  </div>
+  <div class="memories-grid" id="memoriesGrid">
+    <!-- Upload card shown if signed in -->
+    <div class="memory-upload-card" id="memUploadTrigger" onclick="openMemoryUpload()" style="display:none">
+      <span>➕</span>
+      <span>Add My Memory</span>
+    </div>
+    <!-- Auth required message shown if not signed in -->
+    <div class="auth-required-msg" id="memAuthMsg" style="grid-column:1/-1">
+      <span>🔒</span>
+      Sign in with your email to add your photo memory to this page.
+      <br><br>
+      <button class="modal-btn" style="max-width:220px;margin:0 auto;display:block" onclick="openAuthModal()">Sign In / Sign Up</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">🏫 [School Name]</p>
+  <p>Est. [Year] · [City, Country]</p>
+  <ul class="footer-links">
+    <li><a href="#top">Home</a></li>
+    <li><a href="#students">Students</a></li>
+    <li><a href="#teachers">Teachers</a></li>
+    <li><a href="#videos">Memories</a></li>
+  </ul>
+  <p style="margin-top:10px">Made with ❤️ for <span>Class of 2025</span> · All Rights Reserved · <span>[School Name]</span></p>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════
+   SUPABASE CONFIG
+   Replace the values below with your own from
+   supabase.com → Settings → API
+   ════════════════════════════════════════════ */
+const SUPABASE_URL = 'https://ycswlgeqmeyomxrjistq.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_qKiO3xFIOtoUvRbI9narPw_y8nk-qym';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* ════════════════════════════════════════════
+   ADMIN CONFIG — Change this password!
+   ════════════════════════════════════════════ */
+const ADMIN_PASSWORD = 'farewell2025admin'; // ← CHANGE THIS
+
+/* ════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════ */
+let currentUser = null;
+let isAdminMode = false;
+
+/* ════════════════════════════════════════════
+   TOASTS
+   ════════════════════════════════════════════ */
+function toast(msg, type = 'info', duration = 3500) {
+  const icons = { success: '✅', error: '❌', info: '💬' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${icons[type]||'💬'}</span><span>${msg}</span>`;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(() => t.remove(), duration);
+}
+
+/* ════════════════════════════════════════════
+   MODALS
+   ════════════════════════════════════════════ */
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); clearModalMsgs(); }
+function clearModalMsgs() {
+  document.querySelectorAll('.modal-msg').forEach(el => { el.className = 'modal-msg'; el.textContent = ''; });
+}
+function showModalMsg(id, msg, type) {
+  const el = document.getElementById(id);
+  el.className = `modal-msg ${type}`;
+  el.textContent = msg;
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); });
+});
+
+/* ════════════════════════════════════════════
+   ADMIN MODAL
+   ════════════════════════════════════════════ */
+function openAdminModal() {
+  if (isAdminMode) { exitAdminMode(); return; }
+  document.getElementById('adminPassInput').value = '';
+  openModal('adminModal');
+  setTimeout(() => document.getElementById('adminPassInput').focus(), 100);
+}
+
+function verifyAdmin() {
+  const pass = document.getElementById('adminPassInput').value;
+  if (pass === ADMIN_PASSWORD) {
+    closeModal('adminModal');
+    enterAdminMode();
+  } else {
+    showModalMsg('adminMsg', '❌ Wrong password. Try again.', 'error');
+  }
+}
+
+function enterAdminMode() {
+  isAdminMode = true;
+  document.body.classList.add('edit-mode');
+  document.getElementById('adminBar').classList.add('visible');
+  // Make text fields editable
+  document.querySelectorAll('.info-val, .student-name, .student-roll, .teacher-name, .teacher-subject, .school-name, .school-tagline, .landing-desc').forEach(el => {
+    el.contentEditable = 'true';
+  });
+  // Show slider add button
+  document.querySelectorAll('.slider-add-btn').forEach(b => b.style.display = 'inline-flex');
+  toast('Edit mode on — click any text to change it!', 'success');
+}
+
+function exitAdminMode() {
+  isAdminMode = false;
+  document.body.classList.remove('edit-mode');
+  document.getElementById('adminBar').classList.remove('visible');
+  document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  toast('Exited edit mode.', 'info');
+}
+
+function saveChanges() {
+  toast('Changes saved! (To permanently save, connect Supabase & GitHub Pages)', 'success', 5000);
+}
+
+/* ════════════════════════════════════════════
+   SHARE MODAL
+   ════════════════════════════════════════════ */
+function openShareModal() {
+  const url = window.location.href;
+  document.getElementById('shareUrlInput').value = url;
+  const msg = encodeURIComponent('🎓 Check out our Class of 2025 Farewell Page! ' + url);
+  document.getElementById('shareWhatsapp').href = `https://wa.me/?text=${msg}`;
+  document.getElementById('shareEmail').href = `mailto:?subject=Farewell Class of 2025&body=${msg}`;
+  openModal('shareModal');
+  generateQR(url);
+}
+
+function copyShareUrl() {
+  const url = document.getElementById('shareUrlInput').value;
+  navigator.clipboard.writeText(url).then(() => toast('Link copied! 🔗', 'success'));
+}
+
+function nativeShare() {
+  if (navigator.share) {
+    navigator.share({ title: 'Farewell – Class of 2025', url: window.location.href })
+      .catch(() => {});
+  } else {
+    copyShareUrl();
+  }
+}
+
+function generateQR(url) {
+  // Minimal QR using a public API image
+  const qrBox = document.getElementById('qrBox');
+  qrBox.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=136x136&data=${encodeURIComponent(url)}" style="width:136px;height:136px;border-radius:4px" alt="QR Code">`;
+}
+
+/* ════════════════════════════════════════════
+   AUTH MODAL
+   ════════════════════════════════════════════ */
+function openAuthModal() { openModal('authModal'); }
+
+function switchAuthTab(tab) {
+  document.getElementById('tabSignIn').classList.toggle('active', tab === 'signin');
+  document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
+  document.getElementById('authSignInForm').style.display = tab === 'signin' ? 'block' : 'none';
+  document.getElementById('authSignUpForm').style.display = tab === 'signup' ? 'block' : 'none';
+  clearModalMsgs();
+}
+
+async function signUp() {
+  const name = document.getElementById('suName').value.trim();
+  const email = document.getElementById('suEmail').value.trim();
+  const password = document.getElementById('suPassword').value;
+  if (!name || !email || !password) return showModalMsg('authMsg', 'Please fill in all fields.', 'error');
+  if (password.length < 6) return showModalMsg('authMsg', 'Password must be at least 6 characters.', 'error');
+
+  const { data, error } = await sb.auth.signUp({
+    email, password,
+    options: { data: { display_name: name } }
+  });
+  if (error) return showModalMsg('authMsg', '❌ ' + error.message, 'error');
+  showModalMsg('authMsg', '✅ Account created! Check your email to confirm, then sign in.', 'success');
+}
+
+async function signIn() {
+  const email = document.getElementById('siEmail').value.trim();
+  const password = document.getElementById('siPassword').value;
+  if (!email || !password) return showModalMsg('authMsg', 'Please enter email and password.', 'error');
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) return showModalMsg('authMsg', '❌ ' + error.message, 'error');
+  closeModal('authModal');
+  toast(`Welcome back! 👋`, 'success');
+}
+
+async function signOut() {
+  await sb.auth.signOut();
+  currentUser = null;
+  updateAuthUI(null);
+  toast('Signed out.', 'info');
+  closeModal('authModal');
+}
+
+function updateAuthUI(user) {
+  currentUser = user;
+  const pill = document.getElementById('navUserPill');
+  const avatar = document.getElementById('navAvatar');
+  const name = document.getElementById('navUserName');
+  const fabAuth = document.getElementById('fabAuth');
+  const signOutBtn = document.getElementById('signOutBtn');
+  const authMsg = document.getElementById('memAuthMsg');
+  const uploadTrigger = document.getElementById('memUploadTrigger');
+
+  pill.style.display = 'flex';
+  if (user) {
+    const displayName = user.user_metadata?.display_name || user.email.split('@')[0];
+    avatar.textContent = displayName[0].toUpperCase();
+    name.textContent = displayName;
+    fabAuth.innerHTML = '👤<span class="fab-tip">Account</span>';
+    signOutBtn.style.display = 'block';
+    // Show upload trigger in memories
+    if (authMsg) authMsg.style.display = 'none';
+    if (uploadTrigger) uploadTrigger.style.display = 'flex';
+    loadMemories();
+  } else {
+    avatar.textContent = '?';
+    name.textContent = 'Sign In';
+    fabAuth.innerHTML = '👤<span class="fab-tip">Sign In / Up</span>';
+    signOutBtn.style.display = 'none';
+    if (authMsg) authMsg.style.display = 'block';
+    if (uploadTrigger) uploadTrigger.style.display = 'none';
+  }
+}
+
+// Listen for auth changes
+sb.auth.onAuthStateChange((event, session) => {
+  updateAuthUI(session?.user || null);
+});
+
+/* ════════════════════════════════════════════
+   FRIEND MEMORIES
+   ════════════════════════════════════════════ */
+function openMemoryUpload() {
+  if (!currentUser) { openAuthModal(); return; }
+  document.getElementById('memMsg').className = 'modal-msg';
+  document.getElementById('memCaption').value = '';
+  document.getElementById('memFileInput').value = '';
+  document.getElementById('memUploadPreviewWrap').style.display = 'none';
+  openModal('memoryUploadModal');
+}
+
+function previewMemory(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('memUploadPreview').src = e.target.result;
+    document.getElementById('memUploadPreviewWrap').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function submitMemory() {
+  if (!currentUser) return;
+  const file = document.getElementById('memFileInput').files[0];
+  const caption = document.getElementById('memCaption').value.trim();
+  if (!file) return showModalMsg('memMsg', 'Please choose a photo first.', 'error');
+
+  showModalMsg('memMsg', '⏳ Uploading...', 'info');
+
+  // Upload to Supabase Storage
+  const fileName = `memories/${currentUser.id}_${Date.now()}.${file.name.split('.').pop()}`;
+  const { data: uploadData, error: uploadError } = await sb.storage
+    .from('photos')
+    .upload(fileName, file, { upsert: false });
+
+  if (uploadError) return showModalMsg('memMsg', '❌ Upload failed: ' + uploadError.message, 'error');
+
+  // Get public URL
+  const { data: { publicUrl } } = sb.storage.from('photos').getPublicUrl(fileName);
+
+  // Save to DB
+  const displayName = currentUser.user_metadata?.display_name || currentUser.email.split('@')[0];
+  const { error: dbError } = await sb.from('memories').insert({
+    user_id: currentUser.id,
+    author: displayName,
+    caption: caption || null,
+    image_url: publicUrl,
+    created_at: new Date().toISOString()
+  });
+
+  if (dbError) return showModalMsg('memMsg', '❌ Save failed: ' + dbError.message, 'error');
+
+  showModalMsg('memMsg', '✅ Memory uploaded!', 'success');
+  setTimeout(() => { closeModal('memoryUploadModal'); loadMemories(); }, 1500);
+}
+
+async function loadMemories() {
+  const grid = document.getElementById('memoriesGrid');
+
+  // Fetch from Supabase
+  const { data, error } = await sb.from('memories')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  // Remove old memory cards (keep upload trigger + auth msg)
+  grid.querySelectorAll('.memory-card').forEach(c => c.remove());
+
+  if (error || !data || data.length === 0) return;
+
+  data.forEach(mem => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    const date = new Date(mem.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    card.innerHTML = `
+      <img class="memory-img" src="${mem.image_url}" alt="Memory" loading="lazy">
+      <div class="memory-body">
+        <div class="memory-author">📸 ${mem.author}</div>
+        ${mem.caption ? `<div class="memory-caption">${mem.caption}</div>` : ''}
+        <div class="memory-date">${date}</div>
+      </div>`;
+    // Insert after upload trigger
+    const trigger = document.getElementById('memUploadTrigger');
+    trigger.after(card);
+  });
+}
+
+/* ════════════════════════════════════════════
+   CONFETTI
+   ════════════════════════════════════════════ */
+const canvas = document.getElementById('confettiCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const pieces = [];
+const colors = ['#c9a84c','#fff','#e8c76d','#aad4f5','#f5aaa0'];
+for(let i=0;i<80;i++){
+  pieces.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height - canvas.height,
+    w:Math.random()*10+4,
+    h:Math.random()*6+3,
+    color:colors[Math.floor(Math.random()*colors.length)],
+    speed:Math.random()*1.5+0.5,
+    angle:Math.random()*Math.PI*2,
+    spin:Math.random()*0.05-0.025,
+    opacity:Math.random()*0.6+0.2
+  });
+}
+function drawConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p=>{
+    ctx.save();ctx.globalAlpha=p.opacity;ctx.fillStyle=p.color;
+    ctx.translate(p.x,p.y);ctx.rotate(p.angle);
+    ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+    p.y+=p.speed;p.angle+=p.spin;
+    if(p.y>canvas.height) p.y=-10;
+  });
+  requestAnimationFrame(drawConfetti);
+}
+drawConfetti();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight});
+
+/* ════════════════════════════════════════════
+   PHOTO SLIDER
+   ════════════════════════════════════════════ */
+let sliderIndex = 0;
+let sliderAutoTimer = null;
+
+function sliderInit() {
+  renderSliderUI();
+  sliderAutoPlay();
+}
+
+function renderSliderUI() {
+  const track = document.getElementById('sliderTrack');
+  const slides = track.querySelectorAll('.slide');
+  const total = slides.length;
+  const dotsEl = document.getElementById('sliderDots');
+  dotsEl.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'slider-dot' + (i === sliderIndex ? ' active' : '');
+    d.onclick = () => sliderGoTo(i);
+    dotsEl.appendChild(d);
+  });
+  const thumbsEl = document.getElementById('sliderThumbs');
+  thumbsEl.innerHTML = '';
+  slides.forEach((slide, i) => {
+    const th = document.createElement('div');
+    th.className = 'slider-thumb' + (i === sliderIndex ? ' active-thumb' : '');
+    th.onclick = () => sliderGoTo(i);
+    const img = slide.querySelector('img');
+    const ph = slide.querySelector('.slide-placeholder span');
+    if (img) { const ti = document.createElement('img'); ti.src = img.src; th.appendChild(ti); }
+    else if (ph) { th.textContent = ph.textContent; }
+    thumbsEl.appendChild(th);
+  });
+  track.style.transform = `translateX(-${sliderIndex * 100}%)`;
+  document.getElementById('slideCountBadge').textContent = `${sliderIndex + 1} / ${total}`;
+}
+
+function sliderGoTo(idx) {
+  const track = document.getElementById('sliderTrack');
+  const total = track.querySelectorAll('.slide').length;
+  sliderIndex = (idx + total) % total;
+  renderSliderUI();
+  resetAutoPlay();
+}
+function sliderMove(dir) { sliderGoTo(sliderIndex + dir); }
+function sliderAutoPlay() { sliderAutoTimer = setInterval(() => sliderMove(1), 4000); }
+function resetAutoPlay() { clearInterval(sliderAutoTimer); sliderAutoPlay(); }
+
+function triggerSlideUpload(idx) {
+  if (!isAdminMode) return;
+  const slides = document.getElementById('sliderTrack').querySelectorAll('.slide');
+  const input = slides[idx] && slides[idx].querySelector('input[type=file]');
+  if (input) input.click();
+}
+
+function handleSlideUpload(input, idx) {
+  const file = input.files[0];
+  if (!file) return;
+  const slide = input.closest('.slide');
+  const reader = new FileReader();
+  reader.onload = e => {
+    const old = slide.querySelector('img'); if (old) old.remove();
+    const img = document.createElement('img'); img.src = e.target.result;
+    slide.insertBefore(img, slide.firstChild);
+    const ph = slide.querySelector('.slide-placeholder'); if (ph) ph.style.display = 'none';
+    renderSliderUI();
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleAddSlides(input) {
+  if (!isAdminMode) { toast('Enter admin mode to add photos.', 'error'); return; }
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  const track = document.getElementById('sliderTrack');
+  files.forEach((file, fi) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const slideIdx = track.querySelectorAll('.slide').length;
+      const newSlide = document.createElement('div');
+      newSlide.className = 'slide';
+      newSlide.onclick = () => triggerSlideUpload(slideIdx);
+      const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*'; fileInput.style.display='none';
+      fileInput.onchange = function() { handleSlideUpload(this, slideIdx); };
+      const img = document.createElement('img'); img.src = e.target.result;
+      const overlay = document.createElement('div'); overlay.className='slide-overlay'; overlay.innerHTML='<span>📷</span><span>Change Photo</span>';
+      const label = document.createElement('div'); label.className='slide-label'; label.textContent = file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
+      newSlide.appendChild(fileInput); newSlide.appendChild(img); newSlide.appendChild(overlay); newSlide.appendChild(label);
+      track.appendChild(newSlide);
+      if (fi === files.length - 1) { sliderIndex = track.querySelectorAll('.slide').length - 1; renderSliderUI(); }
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') sliderMove(-1);
+  if (e.key === 'ArrowRight') sliderMove(1);
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+});
+
+(function(){
+  let startX = 0;
+  const vp = document.getElementById('schoolSlider');
+  if (!vp) return;
+  vp.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) sliderMove(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+/* ════════════════════════════════════════════
+   TEACHER & AVATAR UPLOADS (admin only)
+   ════════════════════════════════════════════ */
+function triggerTeacherPic(cell) {
+  if (!isAdminMode) return;
+  const input = cell.querySelector('input[type=file]'); if (input) input.click();
+}
+function handleTeacherPic(input) {
+  const cell = input.closest('.teacher-pic'); const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const old = cell.querySelector('img'); if (old) old.remove();
+    const img = document.createElement('img'); img.src = e.target.result;
+    cell.insertBefore(img, cell.firstChild);
+    cell.childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = ''; });
+  };
+  reader.readAsDataURL(file);
+}
+function triggerAvatarUpload(avatar) {
+  if (!isAdminMode) return;
+  const input = avatar.querySelector('input[type=file]'); if (input) input.click();
+}
+function handleAvatarUpload(input) {
+  const avatar = input.closest('.student-avatar'); const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const old = avatar.querySelector('img'); if (old) old.remove();
+    const img = document.createElement('img'); img.src = e.target.result;
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%';
+    avatar.insertBefore(img, avatar.firstChild);
+    const emoji = avatar.querySelector('.av-emoji'); if (emoji) emoji.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  sliderInit();
+  // Hide slider add btn until admin mode
+  document.querySelectorAll('.slider-add-btn').forEach(b => b.style.display = 'none');
+  // Show nav pill
+  document.getElementById('navUserPill').style.display = 'flex';
+  // Check existing session
+  sb.auth.getSession().then(({ data: { session } }) => {
+    updateAuthUI(session?.user || null);
+  });
+});
+</script>
+</body>
+</html>
