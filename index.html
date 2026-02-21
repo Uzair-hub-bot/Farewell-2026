@@ -145,6 +145,11 @@ nav{position:sticky;top:0;z-index:999;background:rgba(26,26,46,0.97);backdrop-fi
 .add-media{border:2px dashed #d0c8b8;background:transparent;color:#bbb;cursor:pointer}
 .add-media:hover{border-color:var(--gold);color:var(--gold)}
 .add-media .video-thumb{background:rgba(201,168,76,.05)}
+/* Media items */
+.media-video-thumb{width:100%;height:170px;object-fit:cover;display:block}
+.media-photo-thumb{width:100%;height:170px;object-fit:cover;display:block;cursor:pointer}
+.media-delete-btn{position:absolute;top:8px;right:8px;background:rgba(255,50,50,.8);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.85rem;display:none;align-items:center;justify-content:center;z-index:10}
+body.edit-mode .media-delete-btn{display:flex}
 
 /* ── FOOTER ── */
 footer{background:var(--deep);color:rgba(255,255,255,.45);text-align:center;padding:50px 20px 30px;font-size:.85rem;line-height:1.8}
@@ -1118,79 +1123,74 @@ body.edit-mode .edit-mode-ribbon{display:block}
 <section class="videos-section" id="videos">
   <div class="section-head">
     <p class="section-lbl">Moving Memories</p>
-    <h2 class="section-ttl">Videos & Highlights</h2>
+    <h2 class="section-ttl">Videos & Photos</h2>
     <div class="divider"></div>
+    <p style="color:#888;font-size:.9rem;margin-top:14px;max-width:500px;margin-inline:auto;line-height:1.7">
+      Admin can upload videos and photos that save permanently to Supabase 🎬📸
+    </p>
   </div>
-  <div class="videos-grid" style="max-width:1100px;margin:0 auto">
 
-    <div class="video-card">
-      <div class="video-thumb">
-        <div class="play-btn">▶</div>
-        <div style="position:absolute;top:12px;left:12px;background:var(--gold);color:var(--deep);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:1px;text-transform:uppercase">Highlight</div>
-      </div>
-      <div class="video-label">
-        <p class="video-title">Graduation Ceremony 2025</p>
-        <p class="video-sub">The unforgettable farewell event</p>
-      </div>
-    </div>
+  <!-- hidden inputs -->
+  <input type="file" id="videoFileInput" accept="video/*" style="display:none" onchange="handleVideoUpload(this)">
+  <input type="file" id="mediaPhotoInput" accept="image/*" style="display:none" onchange="handleMediaPhotoUpload(this)">
 
-    <div class="video-card">
-      <div class="video-thumb" style="background:linear-gradient(135deg,#1a3a6e,#0f3460)">
-        <div class="play-btn">▶</div>
-      </div>
-      <div class="video-label">
-        <p class="video-title">Annual Sports Day</p>
-        <p class="video-sub">Champions on the field</p>
-      </div>
-    </div>
+  <div class="videos-grid" id="videosGrid" style="max-width:1100px;margin:0 auto">
 
-    <div class="video-card">
-      <div class="video-thumb" style="background:linear-gradient(135deg,#2d1a5e,#1a1a2e)">
-        <div class="play-btn">▶</div>
-      </div>
-      <div class="video-label">
-        <p class="video-title">Science Exhibition</p>
-        <p class="video-sub">Innovators in action</p>
-      </div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb" style="background:linear-gradient(135deg,#1a3d2e,#0f3460)">
-        <div class="play-btn">▶</div>
-      </div>
-      <div class="video-label">
-        <p class="video-title">Cultural Night</p>
-        <p class="video-sub">Dance, music & performances</p>
-      </div>
-    </div>
-
-    <div class="video-card add-media">
-      <div class="video-thumb" style="background:transparent;border:none">
-        <div style="text-align:center;color:#ccc">
+    <!-- ADD VIDEO CARD (admin only) -->
+    <div class="video-card add-media" id="addVideoCard" style="display:none" onclick="document.getElementById('videoFileInput').click()">
+      <div class="video-thumb" style="background:rgba(201,168,76,.05);border:none">
+        <div style="text-align:center;color:var(--gold)">
           <p style="font-size:2.5rem;margin-bottom:8px">🎬</p>
-          <p style="font-size:.8rem;letter-spacing:1px;text-transform:uppercase">Add a Video</p>
+          <p style="font-size:.8rem;letter-spacing:1px;text-transform:uppercase;font-weight:600">Upload Video</p>
+          <p style="font-size:.7rem;color:#aaa;margin-top:4px">MP4, MOV, AVI</p>
         </div>
       </div>
       <div class="video-label">
-        <p class="video-title" style="color:#bbb">Upload Your Memory</p>
-        <p class="video-sub">Click to add a video</p>
+        <p class="video-title" style="color:var(--gold)">Add a Video</p>
+        <p class="video-sub">Click to upload from device</p>
       </div>
     </div>
 
-    <div class="video-card add-media">
-      <div class="video-thumb" style="background:transparent;border:none">
-        <div style="text-align:center;color:#ccc">
+    <!-- ADD PHOTO CARD (admin only) -->
+    <div class="video-card add-media" id="addPhotoCard" style="display:none" onclick="document.getElementById('mediaPhotoInput').click()">
+      <div class="video-thumb" style="background:rgba(201,168,76,.05);border:none">
+        <div style="text-align:center;color:var(--gold)">
           <p style="font-size:2.5rem;margin-bottom:8px">📸</p>
-          <p style="font-size:.8rem;letter-spacing:1px;text-transform:uppercase">Add a Photo</p>
+          <p style="font-size:.8rem;letter-spacing:1px;text-transform:uppercase;font-weight:600">Upload Photo</p>
+          <p style="font-size:.7rem;color:#aaa;margin-top:4px">JPG, PNG, WEBP</p>
         </div>
       </div>
       <div class="video-label">
-        <p class="video-title" style="color:#bbb">Photo Memory</p>
-        <p class="video-sub">Click to add a photo</p>
+        <p class="video-title" style="color:var(--gold)">Add a Photo</p>
+        <p class="video-sub">Click to upload from device</p>
+      </div>
+    </div>
+
+    <!-- UPLOAD PROGRESS -->
+    <div id="uploadProgress" style="display:none;grid-column:1/-1;text-align:center;padding:30px">
+      <div style="font-size:2rem;margin-bottom:10px">⏳</div>
+      <p style="color:#888;font-size:.9rem" id="uploadProgressText">Uploading to Supabase...</p>
+      <div style="background:#f0ebe0;border-radius:50px;height:8px;margin-top:14px;overflow:hidden;max-width:300px;margin-inline:auto">
+        <div id="uploadProgressBar" style="height:100%;border-radius:50px;background:linear-gradient(90deg,var(--gold),#e8c76d);width:0%;transition:width .3s"></div>
       </div>
     </div>
 
   </div>
+
+  <!-- VIDEO LIGHTBOX -->
+  <div id="videoLightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:5000;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+    <button onclick="closeLightbox()" style="position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer">✕</button>
+    <video id="lightboxVideo" controls style="max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.8)"></video>
+    <p id="lightboxLabel" style="color:rgba(255,255,255,.6);font-size:.85rem;letter-spacing:1px"></p>
+  </div>
+
+  <!-- PHOTO LIGHTBOX -->
+  <div id="photoLightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:5000;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+    <button onclick="closePhotoLightbox()" style="position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer">✕</button>
+    <img id="lightboxPhoto" style="max-width:90vw;max-height:80vh;border-radius:12px;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.8)">
+    <p id="lightboxPhotoLabel" style="color:rgba(255,255,255,.6);font-size:.85rem;letter-spacing:1px"></p>
+  </div>
+
 </section>
 
 <!-- FRIEND MEMORIES SECTION -->
@@ -1308,13 +1308,12 @@ function enterAdminMode() {
   isAdminMode = true;
   document.body.classList.add('edit-mode');
   document.getElementById('adminBar').classList.add('visible');
-  // Make text fields editable
   document.querySelectorAll('.info-val, .student-name, .student-roll, .teacher-name, .teacher-subject, .school-name, .school-tagline, .landing-desc').forEach(el => {
     el.contentEditable = 'true';
   });
-  // Show slider add button
   document.querySelectorAll('.slider-add-btn').forEach(b => b.style.display = 'inline-flex');
-  toast('Edit mode on — click any text to change it!', 'success');
+  toggleMediaCards(true);
+  toast('✏️ Edit mode on — click any text to change it, upload photos & videos!', 'success', 4000);
 }
 
 function exitAdminMode() {
@@ -1322,11 +1321,175 @@ function exitAdminMode() {
   document.body.classList.remove('edit-mode');
   document.getElementById('adminBar').classList.remove('visible');
   document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  document.querySelectorAll('.slider-add-btn').forEach(b => b.style.display = 'none');
+  toggleMediaCards(false);
   toast('Exited edit mode.', 'info');
 }
 
-function saveChanges() {
-  toast('Changes saved! (To permanently save, connect Supabase & GitHub Pages)', 'success', 5000);
+/* ════════════════════════════════════════════
+   SUPABASE UPLOAD HELPER
+   ════════════════════════════════════════════ */
+async function uploadToSupabase(file, folder) {
+  const ext = file.name.split('.').pop();
+  const fileName = `${folder}/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await sb.storage.from('photos').upload(fileName, file, { upsert: true });
+  if (error) { toast('Upload failed: ' + error.message, 'error'); return null; }
+  const { data: { publicUrl } } = sb.storage.from('photos').getPublicUrl(fileName);
+  return publicUrl;
+}
+
+/* ════════════════════════════════════════════
+   SAVE / LOAD PAGE DATA TO SUPABASE
+   ════════════════════════════════════════════ */
+async function saveChanges() {
+  toast('⏳ Saving all changes to Supabase...', 'info', 2000);
+
+  // Collect all student data
+  const students = [];
+  document.querySelectorAll('.student-card').forEach((card, i) => {
+    const avatar = card.querySelector('.student-avatar img');
+    const rows = card.querySelectorAll('.info-row');
+    const data = { index: i, name: card.querySelector('.student-name')?.textContent, roll: card.querySelector('.student-roll')?.textContent, avatar: avatar?.src || null, info: [] };
+    rows.forEach(row => { data.info.push({ label: row.querySelector('.info-label')?.textContent, val: row.querySelector('.info-val')?.textContent }); });
+    const bar = card.querySelector('.bar-fill');
+    if (bar) data.marksWidth = bar.style.width;
+    const marksText = card.querySelector('.marks-bar p:nth-child(2)');
+    if (marksText) data.marksText = marksText.textContent;
+    const favTeacher = card.querySelector('.fav-teacher div p:last-child');
+    if (favTeacher) data.favTeacher = favTeacher.textContent;
+    students.push(data);
+  });
+
+  // Collect all teacher data
+  const teachers = [];
+  document.querySelectorAll('.teacher-card').forEach((card, i) => {
+    const pics = [];
+    card.querySelectorAll('.teacher-pic img').forEach(img => pics.push(img.src));
+    const tInfos = [];
+    card.querySelectorAll('.t-info').forEach(ti => { tInfos.push({ label: ti.querySelector('.t-info-lbl')?.textContent, val: ti.querySelector('.t-info-val')?.textContent }); });
+    teachers.push({
+      index: i,
+      name: card.querySelector('.teacher-name')?.textContent,
+      subject: card.querySelector('.teacher-subject')?.textContent,
+      degree: card.querySelector('.teacher-degree')?.textContent,
+      quote: card.querySelector('.teacher-quote')?.textContent,
+      pics, tInfos
+    });
+  });
+
+  // Collect slider photos
+  const slides = [];
+  document.querySelectorAll('#sliderTrack .slide').forEach((slide, i) => {
+    const img = slide.querySelector('img');
+    const label = slide.querySelector('.slide-label');
+    slides.push({ index: i, imgSrc: img?.src || null, label: label?.textContent || '' });
+  });
+
+  // Collect school info
+  const school = {
+    name: document.querySelector('.school-name')?.textContent,
+    tagline: document.querySelector('.school-tagline')?.textContent,
+    desc: document.querySelector('.landing-desc')?.textContent
+  };
+
+  const payload = { students, teachers, slides, school };
+
+  const { error } = await sb.from('page_data').upsert({ id: 'main', content: payload, updated_at: new Date().toISOString() });
+
+  if (error) { toast('❌ Save failed: ' + error.message, 'error'); return; }
+  toast('✅ All changes saved permanently!', 'success', 4000);
+}
+
+async function loadPageData() {
+  const { data, error } = await sb.from('page_data').select('content').eq('id', 'main').single();
+  if (error || !data) return; // No saved data yet, show defaults
+
+  const { students, teachers, slides, school } = data.content;
+
+  // Restore school info
+  if (school) {
+    const sn = document.querySelector('.school-name'); if (sn && school.name) sn.textContent = school.name;
+    const st = document.querySelector('.school-tagline'); if (st && school.tagline) st.textContent = school.tagline;
+    const sd = document.querySelector('.landing-desc'); if (sd && school.desc) sd.textContent = school.desc;
+  }
+
+  // Restore students
+  const studentCards = document.querySelectorAll('.student-card');
+  students?.forEach(s => {
+    const card = studentCards[s.index];
+    if (!card) return;
+    const nameEl = card.querySelector('.student-name'); if (nameEl && s.name) nameEl.textContent = s.name;
+    const rollEl = card.querySelector('.student-roll'); if (rollEl && s.roll) rollEl.textContent = s.roll;
+    // Restore avatar
+    if (s.avatar && s.avatar.startsWith('http')) {
+      const av = card.querySelector('.student-avatar');
+      if (av) {
+        const old = av.querySelector('img'); if (old) old.remove();
+        const img = document.createElement('img'); img.src = s.avatar;
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%';
+        av.insertBefore(img, av.firstChild);
+        const emoji = av.querySelector('.av-emoji'); if (emoji) emoji.style.display = 'none';
+      }
+    }
+    // Restore info rows
+    const rows = card.querySelectorAll('.info-row');
+    s.info?.forEach((info, ri) => { const val = rows[ri]?.querySelector('.info-val'); if (val && info.val) val.textContent = info.val; });
+    // Restore marks
+    if (s.marksWidth) { const bar = card.querySelector('.bar-fill'); if (bar) bar.style.width = s.marksWidth; }
+    if (s.marksText) { const mt = card.querySelector('.marks-bar p:nth-child(2)'); if (mt) mt.textContent = s.marksText; }
+    if (s.favTeacher) { const ft = card.querySelector('.fav-teacher div p:last-child'); if (ft) ft.textContent = s.favTeacher; }
+  });
+
+  // Restore teachers
+  const teacherCards = document.querySelectorAll('.teacher-card');
+  teachers?.forEach(t => {
+    const card = teacherCards[t.index];
+    if (!card) return;
+    const nameEl = card.querySelector('.teacher-name'); if (nameEl && t.name) nameEl.textContent = t.name;
+    const subEl = card.querySelector('.teacher-subject'); if (subEl && t.subject) subEl.textContent = t.subject;
+    const degEl = card.querySelector('.teacher-degree'); if (degEl && t.degree) degEl.textContent = t.degree;
+    const quoteEl = card.querySelector('.teacher-quote'); if (quoteEl && t.quote) quoteEl.textContent = t.quote;
+    t.tInfos?.forEach((info, ii) => { const ti = card.querySelectorAll('.t-info')[ii]; if (ti && info.val) { const v = ti.querySelector('.t-info-val'); if (v) v.textContent = info.val; } });
+    // Restore teacher pics
+    t.pics?.forEach((src, pi) => {
+      if (!src || !src.startsWith('http')) return;
+      const picCells = card.querySelectorAll('.teacher-pic');
+      if (!picCells[pi]) return;
+      const old = picCells[pi].querySelector('img'); if (old) old.remove();
+      const img = document.createElement('img'); img.src = src; img.style.cssText='width:100%;height:100%;object-fit:cover';
+      picCells[pi].insertBefore(img, picCells[pi].firstChild);
+      picCells[pi].childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = ''; });
+    });
+  });
+
+  // Restore slider
+  if (slides?.length) {
+    const track = document.getElementById('sliderTrack');
+    const existingSlides = track.querySelectorAll('.slide');
+    slides.forEach((s, i) => {
+      if (!s.imgSrc || !s.imgSrc.startsWith('http')) return;
+      let slide = existingSlides[i];
+      if (!slide) {
+        // Create new slide
+        slide = document.createElement('div');
+        slide.className = 'slide';
+        const idx = track.querySelectorAll('.slide').length;
+        slide.onclick = () => triggerSlideUpload(idx);
+        const fi = document.createElement('input'); fi.type='file'; fi.accept='image/*'; fi.style.display='none';
+        fi.onchange = function() { handleSlideUpload(this, idx); };
+        const ov = document.createElement('div'); ov.className='slide-overlay'; ov.innerHTML='<span>📷</span><span>Change Photo</span>';
+        const lb = document.createElement('div'); lb.className='slide-label'; lb.textContent = s.label;
+        slide.appendChild(fi); slide.appendChild(ov); slide.appendChild(lb);
+        track.appendChild(slide);
+      }
+      const old = slide.querySelector('img'); if (old) old.remove();
+      const img = document.createElement('img'); img.src = s.imgSrc;
+      slide.insertBefore(img, slide.firstChild);
+      const ph = slide.querySelector('.slide-placeholder'); if (ph) ph.style.display = 'none';
+      const lb = slide.querySelector('.slide-label'); if (lb && s.label) lb.textContent = s.label;
+    });
+    renderSliderUI();
+  }
 }
 
 /* ════════════════════════════════════════════
@@ -1440,10 +1603,7 @@ function updateAuthUI(user) {
   }
 }
 
-// Listen for auth changes
-sb.auth.onAuthStateChange((event, session) => {
-  updateAuthUI(session?.user || null);
-});
+// Auth state handled in INIT section above
 
 /* ════════════════════════════════════════════
    FRIEND MEMORIES
@@ -1626,44 +1786,44 @@ function triggerSlideUpload(idx) {
   if (input) input.click();
 }
 
-function handleSlideUpload(input, idx) {
-  const file = input.files[0];
-  if (!file) return;
+async function handleSlideUpload(input, idx) {
+  const file = input.files[0]; if (!file) return;
   const slide = input.closest('.slide');
-  const reader = new FileReader();
-  reader.onload = e => {
-    const old = slide.querySelector('img'); if (old) old.remove();
-    const img = document.createElement('img'); img.src = e.target.result;
-    slide.insertBefore(img, slide.firstChild);
-    const ph = slide.querySelector('.slide-placeholder'); if (ph) ph.style.display = 'none';
-    renderSliderUI();
-  };
-  reader.readAsDataURL(file);
+  toast('⏳ Uploading slider photo...', 'info', 2000);
+  const url = await uploadToSupabase(file, 'slider');
+  if (!url) return;
+  const old = slide.querySelector('img'); if (old) old.remove();
+  const img = document.createElement('img'); img.src = url;
+  slide.insertBefore(img, slide.firstChild);
+  const ph = slide.querySelector('.slide-placeholder'); if (ph) ph.style.display = 'none';
+  renderSliderUI();
+  toast('✅ Slider photo saved!', 'success');
 }
 
-function handleAddSlides(input) {
+async function handleAddSlides(input) {
   if (!isAdminMode) { toast('Enter admin mode to add photos.', 'error'); return; }
-  const files = Array.from(input.files);
-  if (!files.length) return;
+  const files = Array.from(input.files); if (!files.length) return;
   const track = document.getElementById('sliderTrack');
-  files.forEach((file, fi) => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const slideIdx = track.querySelectorAll('.slide').length;
-      const newSlide = document.createElement('div');
-      newSlide.className = 'slide';
-      newSlide.onclick = () => triggerSlideUpload(slideIdx);
-      const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*'; fileInput.style.display='none';
-      fileInput.onchange = function() { handleSlideUpload(this, slideIdx); };
-      const img = document.createElement('img'); img.src = e.target.result;
-      const overlay = document.createElement('div'); overlay.className='slide-overlay'; overlay.innerHTML='<span>📷</span><span>Change Photo</span>';
-      const label = document.createElement('div'); label.className='slide-label'; label.textContent = file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
-      newSlide.appendChild(fileInput); newSlide.appendChild(img); newSlide.appendChild(overlay); newSlide.appendChild(label);
-      track.appendChild(newSlide);
-      if (fi === files.length - 1) { sliderIndex = track.querySelectorAll('.slide').length - 1; renderSliderUI(); }
-    };
-    reader.readAsDataURL(file);
-  });
+  toast(`⏳ Uploading ${files.length} photo(s)...`, 'info', 3000);
+  for (let fi = 0; fi < files.length; fi++) {
+    const file = files[fi];
+    const url = await uploadToSupabase(file, 'slider');
+    if (!url) continue;
+    const slideIdx = track.querySelectorAll('.slide').length;
+    const newSlide = document.createElement('div');
+    newSlide.className = 'slide';
+    newSlide.onclick = () => triggerSlideUpload(slideIdx);
+    const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*'; fileInput.style.display='none';
+    fileInput.onchange = function() { handleSlideUpload(this, slideIdx); };
+    const img = document.createElement('img'); img.src = url;
+    const overlay = document.createElement('div'); overlay.className='slide-overlay'; overlay.innerHTML='<span>📷</span><span>Change Photo</span>';
+    const label = document.createElement('div'); label.className='slide-label'; label.textContent = file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
+    newSlide.appendChild(fileInput); newSlide.appendChild(img); newSlide.appendChild(overlay); newSlide.appendChild(label);
+    track.appendChild(newSlide);
+  }
+  sliderIndex = track.querySelectorAll('.slide').length - 1;
+  renderSliderUI();
+  toast('✅ Photos added! Click Save Changes to keep them.', 'success', 4000);
   input.value = '';
 }
 
@@ -1685,54 +1845,222 @@ document.addEventListener('keydown', e => {
 })();
 
 /* ════════════════════════════════════════════
-   TEACHER & AVATAR UPLOADS (admin only)
+   TEACHER & AVATAR UPLOADS → SUPABASE
    ════════════════════════════════════════════ */
 function triggerTeacherPic(cell) {
   if (!isAdminMode) return;
   const input = cell.querySelector('input[type=file]'); if (input) input.click();
 }
-function handleTeacherPic(input) {
-  const cell = input.closest('.teacher-pic'); const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const old = cell.querySelector('img'); if (old) old.remove();
-    const img = document.createElement('img'); img.src = e.target.result;
-    cell.insertBefore(img, cell.firstChild);
-    cell.childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = ''; });
-  };
-  reader.readAsDataURL(file);
+async function handleTeacherPic(input) {
+  const cell = input.closest('.teacher-pic');
+  const file = input.files[0]; if (!file) return;
+  toast('⏳ Uploading teacher photo...', 'info', 2000);
+  const url = await uploadToSupabase(file, 'teachers');
+  if (!url) return;
+  const old = cell.querySelector('img'); if (old) old.remove();
+  const img = document.createElement('img'); img.src = url;
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  cell.insertBefore(img, cell.firstChild);
+  cell.childNodes.forEach(n => { if (n.nodeType === 3) n.textContent = ''; });
+  toast('✅ Teacher photo saved!', 'success');
 }
+
 function triggerAvatarUpload(avatar) {
   if (!isAdminMode) return;
   const input = avatar.querySelector('input[type=file]'); if (input) input.click();
 }
-function handleAvatarUpload(input) {
-  const avatar = input.closest('.student-avatar'); const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const old = avatar.querySelector('img'); if (old) old.remove();
-    const img = document.createElement('img'); img.src = e.target.result;
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%';
-    avatar.insertBefore(img, avatar.firstChild);
-    const emoji = avatar.querySelector('.av-emoji'); if (emoji) emoji.style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+async function handleAvatarUpload(input) {
+  const avatar = input.closest('.student-avatar');
+  const file = input.files[0]; if (!file) return;
+  toast('⏳ Uploading student photo...', 'info', 2000);
+  const url = await uploadToSupabase(file, 'students');
+  if (!url) return;
+  const old = avatar.querySelector('img'); if (old) old.remove();
+  const img = document.createElement('img'); img.src = url;
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%';
+  avatar.insertBefore(img, avatar.firstChild);
+  const emoji = avatar.querySelector('.av-emoji'); if (emoji) emoji.style.display = 'none';
+  toast('✅ Student photo saved!', 'success');
 }
 
 /* ════════════════════════════════════════════
-   INIT
+   VIDEO & PHOTO UPLOAD → SUPABASE
    ════════════════════════════════════════════ */
-window.addEventListener('load', () => {
-  sliderInit();
-  // Hide slider add btn until admin mode
-  document.querySelectorAll('.slider-add-btn').forEach(b => b.style.display = 'none');
-  // Show nav pill
-  document.getElementById('navUserPill').style.display = 'flex';
-  // Check existing session
-  sb.auth.getSession().then(({ data: { session } }) => {
-    updateAuthUI(session?.user || null);
+
+function showUploadProgress(text, pct) {
+  const wrap = document.getElementById('uploadProgress');
+  const txt = document.getElementById('uploadProgressText');
+  const bar = document.getElementById('uploadProgressBar');
+  wrap.style.display = 'block';
+  txt.textContent = text;
+  bar.style.width = pct + '%';
+}
+function hideUploadProgress() {
+  document.getElementById('uploadProgress').style.display = 'none';
+}
+
+async function handleVideoUpload(input) {
+  if (!isAdminMode) return;
+  const file = input.files[0]; if (!file) return;
+
+  // Check size (50MB limit for free Supabase)
+  if (file.size > 50 * 1024 * 1024) {
+    toast('❌ Video too large! Max 50MB. Try compressing it first.', 'error', 5000); return;
+  }
+
+  showUploadProgress('⏳ Uploading video to Supabase...', 30);
+  const ext = file.name.split('.').pop();
+  const fileName = `videos/${Date.now()}.${ext}`;
+  const { error } = await sb.storage.from('photos').upload(fileName, file, { upsert: true });
+  if (error) { hideUploadProgress(); toast('❌ Video upload failed: ' + error.message, 'error'); return; }
+
+  showUploadProgress('✅ Saving to database...', 80);
+  const { data: { publicUrl } } = sb.storage.from('photos').getPublicUrl(fileName);
+
+  // Save to media_items table
+  const { error: dbErr } = await sb.from('media_items').insert({
+    type: 'video', url: publicUrl, title: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '), created_at: new Date().toISOString()
   });
+
+  showUploadProgress('🎉 Done!', 100);
+  setTimeout(() => { hideUploadProgress(); toast('✅ Video uploaded & saved!', 'success'); loadMediaItems(); }, 800);
+  input.value = '';
+}
+
+async function handleMediaPhotoUpload(input) {
+  if (!isAdminMode) return;
+  const file = input.files[0]; if (!file) return;
+
+  showUploadProgress('⏳ Uploading photo to Supabase...', 30);
+  const url = await uploadToSupabase(file, 'media');
+  if (!url) { hideUploadProgress(); return; }
+
+  showUploadProgress('✅ Saving to database...', 80);
+  const { error: dbErr } = await sb.from('media_items').insert({
+    type: 'photo', url, title: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '), created_at: new Date().toISOString()
+  });
+
+  showUploadProgress('🎉 Done!', 100);
+  setTimeout(() => { hideUploadProgress(); toast('✅ Photo uploaded & saved!', 'success'); loadMediaItems(); }, 800);
+  input.value = '';
+}
+
+async function loadMediaItems() {
+  const grid = document.getElementById('videosGrid');
+
+  // Remove old media cards (keep add cards and progress)
+  grid.querySelectorAll('.media-item-card').forEach(c => c.remove());
+
+  const { data, error } = await sb.from('media_items').select('*').order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) return;
+
+  // Insert cards before the add buttons
+  const addVideoCard = document.getElementById('addVideoCard');
+  data.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'video-card media-item-card';
+    card.style.position = 'relative';
+
+    if (item.type === 'video') {
+      card.innerHTML = `
+        <div class="video-thumb" style="position:relative;cursor:pointer" onclick="openVideoLightbox('${item.url}','${item.title}')">
+          <video class="media-video-thumb" src="${item.url}" preload="metadata" muted></video>
+          <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">▶</div>
+          <div style="position:absolute;top:10px;left:10px;background:var(--gold);color:var(--deep);font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:1px">VIDEO</div>
+        </div>
+        <div class="video-label">
+          <p class="video-title">${item.title}</p>
+          <p class="video-sub">${new Date(item.created_at).toLocaleDateString()}</p>
+        </div>
+        <button class="media-delete-btn" onclick="deleteMediaItem('${item.id}','${item.url}',this)" title="Delete">✕</button>`;
+    } else {
+      card.innerHTML = `
+        <div class="video-thumb" style="position:relative;cursor:pointer;padding:0" onclick="openPhotoLightbox('${item.url}','${item.title}')">
+          <img class="media-photo-thumb" src="${item.url}" alt="${item.title}" loading="lazy">
+          <div style="position:absolute;top:10px;left:10px;background:#3b82f6;color:#fff;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:1px">PHOTO</div>
+        </div>
+        <div class="video-label">
+          <p class="video-title">${item.title}</p>
+          <p class="video-sub">${new Date(item.created_at).toLocaleDateString()}</p>
+        </div>
+        <button class="media-delete-btn" onclick="deleteMediaItem('${item.id}','${item.url}',this)" title="Delete">✕</button>`;
+    }
+    grid.insertBefore(card, addVideoCard);
+  });
+}
+
+async function deleteMediaItem(id, url, btn) {
+  if (!isAdminMode) return;
+  if (!confirm('Delete this item permanently?')) return;
+
+  // Delete from storage
+  const path = url.split('/photos/')[1];
+  if (path) await sb.storage.from('photos').remove([path]);
+
+  // Delete from DB
+  await sb.from('media_items').delete().eq('id', id);
+
+  btn.closest('.media-item-card').remove();
+  toast('🗑️ Deleted.', 'info');
+}
+
+function openVideoLightbox(url, title) {
+  const lb = document.getElementById('videoLightbox');
+  document.getElementById('lightboxVideo').src = url;
+  document.getElementById('lightboxLabel').textContent = title;
+  lb.style.display = 'flex';
+}
+function closeLightbox() {
+  document.getElementById('videoLightbox').style.display = 'none';
+  document.getElementById('lightboxVideo').pause();
+  document.getElementById('lightboxVideo').src = '';
+}
+
+function openPhotoLightbox(url, title) {
+  const lb = document.getElementById('photoLightbox');
+  document.getElementById('lightboxPhoto').src = url;
+  document.getElementById('lightboxPhotoLabel').textContent = title;
+  lb.style.display = 'flex';
+}
+function closePhotoLightbox() {
+  document.getElementById('photoLightbox').style.display = 'none';
+}
+
+// Show/hide add media cards based on admin mode
+function toggleMediaCards(show) {
+  document.getElementById('addVideoCard').style.display = show ? 'block' : 'none';
+  document.getElementById('addPhotoCard').style.display = show ? 'block' : 'none';
+}
+window.addEventListener('load', async () => {
+  sliderInit();
+  document.querySelectorAll('.slider-add-btn').forEach(b => b.style.display = 'none');
+  document.getElementById('navUserPill').style.display = 'flex';
+
+  // Load all saved data from Supabase
+  await loadPageData();
+  await loadMediaItems();
+
+  // Check existing session
+  const { data: { session } } = await sb.auth.getSession();
+  updateAuthUI(session?.user || null);
 });
-</script>
+
+// Save user profile to Supabase on sign in
+async function saveUserProfile(user) {
+  if (!user) return;
+  const displayName = user.user_metadata?.display_name || user.email.split('@')[0];
+  await sb.from('user_profiles').upsert({
+    id: user.id,
+    display_name: displayName,
+    email: user.email,
+    last_seen: new Date().toISOString()
+  }, { onConflict: 'id' });
+}
+
+// Override auth state change to also save profile
+sb.auth.onAuthStateChange(async (event, session) => {
+  updateAuthUI(session?.user || null);
+  if (session?.user) await saveUserProfile(session.user);
+});</script>
 </body>
 </html>
