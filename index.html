@@ -148,8 +148,17 @@ nav{position:sticky;top:0;z-index:999;background:rgba(26,26,46,0.97);backdrop-fi
 /* Media items */
 .media-video-thumb{width:100%;height:170px;object-fit:cover;display:block}
 .media-photo-thumb{width:100%;height:170px;object-fit:cover;display:block;cursor:pointer}
-.media-delete-btn{position:absolute;top:8px;right:8px;background:rgba(255,50,50,.8);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.85rem;display:none;align-items:center;justify-content:center;z-index:10}
+.media-delete-btn{position:absolute;top:8px;right:8px;background:rgba(220,38,38,.9);color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1rem;display:none;align-items:center;justify-content:center;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:.2s}
+.media-delete-btn:hover{transform:scale(1.15)}
 body.edit-mode .media-delete-btn{display:flex}
+/* Universal delete button for all cards */
+.del-btn{display:none;position:absolute;top:10px;right:10px;z-index:20;background:rgba(220,38,38,.9);color:#fff;border:none;border-radius:50%;width:32px;height:32px;font-size:1rem;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:.2s;line-height:1}
+.del-btn:hover{background:#b91c1c;transform:scale(1.15)}
+body.edit-mode .del-btn{display:flex}
+.student-card{position:relative}
+.teacher-card{position:relative}
+.memory-card{position:relative}
+.slide{position:relative}
 
 /* ── FOOTER ── */
 footer{background:var(--deep);color:rgba(255,255,255,.45);text-align:center;padding:50px 20px 30px;font-size:.85rem;line-height:1.8}
@@ -440,6 +449,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(0)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,0)">
           <div class="slide-placeholder"><span>🏛️</span><span>School Building</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">School Building</div>
         </div>
@@ -448,6 +458,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(1)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,1)">
           <div class="slide-placeholder"><span>📚</span><span>Library</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Library</div>
         </div>
@@ -456,6 +467,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(2)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,2)">
           <div class="slide-placeholder"><span>🏟️</span><span>Sports Ground</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Sports Ground</div>
         </div>
@@ -464,6 +476,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(3)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,3)">
           <div class="slide-placeholder"><span>🎭</span><span>Auditorium</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Auditorium</div>
         </div>
@@ -472,6 +485,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(4)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,4)">
           <div class="slide-placeholder"><span>🔬</span><span>Science Lab</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Science Lab</div>
         </div>
@@ -480,6 +494,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(5)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,5)">
           <div class="slide-placeholder"><span>💻</span><span>Computer Lab</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Computer Lab</div>
         </div>
@@ -488,6 +503,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(6)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,6)">
           <div class="slide-placeholder"><span>🎨</span><span>Art Room</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Art Room</div>
         </div>
@@ -496,6 +512,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
         <div class="slide" onclick="triggerSlideUpload(7)">
           <input type="file" accept="image/*" style="display:none" onchange="handleSlideUpload(this,7)">
           <div class="slide-placeholder"><span>🎉</span><span>Farewell Party</span></div>
+          <button class="del-btn" onclick="deleteSlide(this)" title="Delete Slide" style="top:10px;right:10px">✕</button>
           <div class="slide-overlay"><span>📷</span><span>Upload Photo</span></div>
           <div class="slide-label">Farewell Party</div>
         </div>
@@ -538,6 +555,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 1 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 1]</p>
@@ -557,6 +575,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 2 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 2]</p>
@@ -576,6 +595,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 3 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 3]</p>
@@ -595,6 +615,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 4 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 4]</p>
@@ -614,6 +635,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 5 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 5]</p>
@@ -633,6 +655,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 6 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 6]</p>
@@ -652,6 +675,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 7 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 7]</p>
@@ -671,6 +695,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 8 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 8]</p>
@@ -690,6 +715,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 9 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 9]</p>
@@ -709,6 +735,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 10 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 10]</p>
@@ -728,6 +755,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 11 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 11]</p>
@@ -747,6 +775,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 12 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 12]</p>
@@ -766,6 +795,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 13 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 13]</p>
@@ -785,6 +815,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 14 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 14]</p>
@@ -804,6 +835,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 15 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 15]</p>
@@ -823,6 +855,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 16 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 16]</p>
@@ -842,6 +875,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 17 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 17]</p>
@@ -861,6 +895,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 18 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 18]</p>
@@ -880,6 +915,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 19 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 19]</p>
@@ -899,6 +935,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 20 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 20]</p>
@@ -918,6 +955,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 21 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 21]</p>
@@ -937,6 +975,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 22 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 22]</p>
@@ -956,6 +995,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 23 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 23]</p>
@@ -975,6 +1015,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 24 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👧</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 24]</p>
@@ -994,6 +1035,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- STUDENT CARD 25 -->
     <div class="student-card">
+      <button class="del-btn" onclick="deleteStudentCard(this)" title="Delete Student">✕</button>
       <div class="student-card-top">
         <div class="student-avatar" onclick="triggerAvatarUpload(this)" title="Click to upload photo"><input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"><span class="av-emoji">👦</span><div class="av-overlay">📷 Upload</div></div>
         <p class="student-name">[Student Name 25]</p>
@@ -1031,6 +1073,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- TEACHER 1 -->
     <div class="teacher-card">
+      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
       <div class="teacher-pics">
         <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👩‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📚<div class="tp-overlay">📷<span>Upload</span></div></div>
@@ -1052,6 +1095,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
     </div>
     <!-- TEACHER 2 -->
     <div class="teacher-card">
+      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
       <div class="teacher-pics">
         <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🔬<div class="tp-overlay">📷<span>Upload</span></div></div>
@@ -1074,6 +1118,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- TEACHER 3 -->
     <div class="teacher-card">
+      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
       <div class="teacher-pics">
         <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👩‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">✍️<div class="tp-overlay">📷<span>Upload</span></div></div>
@@ -1096,6 +1141,7 @@ body.edit-mode .edit-mode-ribbon{display:block}
 
     <!-- TEACHER 4 -->
     <div class="teacher-card">
+      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
       <div class="teacher-pics">
         <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">💻<div class="tp-overlay">📷<span>Upload</span></div></div>
@@ -1665,29 +1711,27 @@ async function submitMemory() {
 
 async function loadMemories() {
   const grid = document.getElementById('memoriesGrid');
+  grid.querySelectorAll('.memory-card').forEach(c => c.remove());
 
-  // Fetch from Supabase
   const { data, error } = await sb.from('memories')
     .select('*')
     .order('created_at', { ascending: false });
-
-  // Remove old memory cards (keep upload trigger + auth msg)
-  grid.querySelectorAll('.memory-card').forEach(c => c.remove());
 
   if (error || !data || data.length === 0) return;
 
   data.forEach(mem => {
     const card = document.createElement('div');
     card.className = 'memory-card';
+    card.style.position = 'relative';
     const date = new Date(mem.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     card.innerHTML = `
+      <button class="del-btn" onclick="deleteFriendMemory(this,'${mem.id}','${mem.image_url}')" title="Delete Memory" style="top:8px;right:8px">✕</button>
       <img class="memory-img" src="${mem.image_url}" alt="Memory" loading="lazy">
       <div class="memory-body">
         <div class="memory-author">📸 ${mem.author}</div>
         ${mem.caption ? `<div class="memory-caption">${mem.caption}</div>` : ''}
         <div class="memory-date">${date}</div>
       </div>`;
-    // Insert after upload trigger
     const trigger = document.getElementById('memUploadTrigger');
     trigger.after(card);
   });
@@ -1884,8 +1928,126 @@ async function handleAvatarUpload(input) {
 }
 
 /* ════════════════════════════════════════════
-   VIDEO & PHOTO UPLOAD → SUPABASE
+   DELETE FUNCTIONS (admin mode only)
    ════════════════════════════════════════════ */
+
+// ── Delete confirmation popup ──
+function confirmDelete(message, onConfirm) {
+  // Create a nice confirm dialog
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  overlay.innerHTML = `
+    <div style="background:linear-gradient(160deg,#1a1a2e,#16213e);border:1px solid rgba(201,168,76,.4);border-radius:18px;padding:30px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6)">
+      <div style="font-size:2.5rem;margin-bottom:12px">🗑️</div>
+      <p style="color:#fff;font-size:1rem;margin-bottom:8px;font-family:'Playfair Display',serif">Delete this?</p>
+      <p style="color:rgba(255,255,255,.5);font-size:.82rem;line-height:1.6;margin-bottom:24px">${message}</p>
+      <div style="display:flex;gap:10px">
+        <button id="cancelDelBtn" style="flex:1;padding:11px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);font-size:.85rem;cursor:pointer">Cancel</button>
+        <button id="confirmDelBtn" style="flex:1;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;font-size:.85rem;font-weight:700;cursor:pointer">Delete ✕</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  document.getElementById('cancelDelBtn').onclick = () => overlay.remove();
+  document.getElementById('confirmDelBtn').onclick = () => { overlay.remove(); onConfirm(); };
+}
+
+// ── Delete student card ──
+function deleteStudentCard(btn) {
+  if (!isAdminMode) return;
+  const card = btn.closest('.student-card');
+  const name = card.querySelector('.student-name')?.textContent || 'this student';
+  confirmDelete(`This will permanently remove <strong style="color:var(--gold)">${name}</strong> from the page.`, async () => {
+    const imgEl = card.querySelector('.student-avatar img');
+    if (imgEl?.src?.includes('supabase')) {
+      const path = imgEl.src.split('/photos/')[1];
+      if (path) await sb.storage.from('photos').remove([path]);
+    }
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.8)';
+    setTimeout(async () => { card.remove(); await saveChanges(); }, 300);
+    toast(`🗑️ ${name} removed & saved.`, 'info');
+  });
+}
+
+// ── Delete teacher card ──
+function deleteCard(btn, type) {
+  if (!isAdminMode) return;
+  const card = btn.closest(`.${type}-card`);
+  const name = card.querySelector(`.${type}-name`)?.textContent || `this ${type}`;
+  confirmDelete(`This will permanently remove <strong style="color:var(--gold)">${name}</strong> from the page.`, async () => {
+    card.querySelectorAll('.teacher-pic img').forEach(async img => {
+      if (img.src?.includes('supabase')) {
+        const path = img.src.split('/photos/')[1];
+        if (path) await sb.storage.from('photos').remove([path]);
+      }
+    });
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.8)';
+    setTimeout(async () => { card.remove(); await saveChanges(); }, 300);
+    toast(`🗑️ ${name} removed & saved.`, 'info');
+  });
+}
+
+// ── Delete slider slide ──
+function deleteSlide(btn) {
+  if (!isAdminMode) return;
+  const slide = btn.closest('.slide');
+  const label = slide.querySelector('.slide-label')?.textContent || 'this slide';
+  confirmDelete(`This will remove the slide <strong style="color:var(--gold)">${label}</strong> from the photo gallery.`, async () => {
+    const imgEl = slide.querySelector('img');
+    if (imgEl?.src?.includes('supabase')) {
+      const path = imgEl.src.split('/photos/')[1];
+      if (path) await sb.storage.from('photos').remove([path]);
+    }
+    slide.style.transition = 'all .3s';
+    slide.style.opacity = '0';
+    setTimeout(async () => {
+      slide.remove();
+      sliderIndex = 0;
+      renderSliderUI();
+      await saveChanges();
+    }, 300);
+    toast('🗑️ Slide removed & saved.', 'info');
+  });
+}
+
+// ── Delete friend memory ──
+async function deleteFriendMemory(btn, memId, imgUrl) {
+  if (!isAdminMode) return;
+  confirmDelete('This will permanently delete this friend\'s memory photo.', async () => {
+    // Remove from storage
+    if (imgUrl?.includes('supabase')) {
+      const path = imgUrl.split('/photos/')[1];
+      if (path) await sb.storage.from('photos').remove([path]);
+    }
+    // Remove from DB
+    await sb.from('memories').delete().eq('id', memId);
+    const card = btn.closest('.memory-card');
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.8)';
+    setTimeout(() => card.remove(), 300);
+    toast('🗑️ Memory deleted.', 'info');
+  });
+}
+
+// ── Delete media item (video/photo in Videos section) ──
+async function deleteMediaItem(id, url, btn) {
+  if (!isAdminMode) return;
+  confirmDelete('This will permanently delete this video/photo from Supabase storage.', async () => {
+    const path = url?.split('/photos/')[1];
+    if (path) await sb.storage.from('photos').remove([path]);
+    await sb.from('media_items').delete().eq('id', id);
+    const card = btn.closest('.media-item-card');
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.8)';
+    setTimeout(() => card.remove(), 300);
+    toast('🗑️ Item deleted.', 'info');
+  });
+}
 
 function showUploadProgress(text, pct) {
   const wrap = document.getElementById('uploadProgress');
@@ -1972,7 +2134,7 @@ async function loadMediaItems() {
           <p class="video-title">${item.title}</p>
           <p class="video-sub">${new Date(item.created_at).toLocaleDateString()}</p>
         </div>
-        <button class="media-delete-btn" onclick="deleteMediaItem('${item.id}','${item.url}',this)" title="Delete">✕</button>`;
+        <button class="del-btn" onclick="deleteMediaItem('${item.id}','${item.url}',this)" title="Delete" style="top:8px;right:8px">✕</button>`;
     } else {
       card.innerHTML = `
         <div class="video-thumb" style="position:relative;cursor:pointer;padding:0" onclick="openPhotoLightbox('${item.url}','${item.title}')">
@@ -1983,7 +2145,7 @@ async function loadMediaItems() {
           <p class="video-title">${item.title}</p>
           <p class="video-sub">${new Date(item.created_at).toLocaleDateString()}</p>
         </div>
-        <button class="media-delete-btn" onclick="deleteMediaItem('${item.id}','${item.url}',this)" title="Delete">✕</button>`;
+        <button class="del-btn" onclick="deleteMediaItem('${item.id}','${item.url}',this)" title="Delete" style="top:8px;right:8px">✕</button>`;
     }
     grid.insertBefore(card, addVideoCard);
   });
@@ -1991,17 +2153,17 @@ async function loadMediaItems() {
 
 async function deleteMediaItem(id, url, btn) {
   if (!isAdminMode) return;
-  if (!confirm('Delete this item permanently?')) return;
-
-  // Delete from storage
-  const path = url.split('/photos/')[1];
-  if (path) await sb.storage.from('photos').remove([path]);
-
-  // Delete from DB
-  await sb.from('media_items').delete().eq('id', id);
-
-  btn.closest('.media-item-card').remove();
-  toast('🗑️ Deleted.', 'info');
+  confirmDelete('This will permanently delete this video/photo from Supabase storage.', async () => {
+    const path = url?.split('/photos/')[1];
+    if (path) await sb.storage.from('photos').remove([path]);
+    await sb.from('media_items').delete().eq('id', id);
+    const card = btn.closest('.media-item-card');
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.8)';
+    setTimeout(() => card.remove(), 300);
+    toast('🗑️ Deleted permanently.', 'info');
+  });
 }
 
 function openVideoLightbox(url, title) {
