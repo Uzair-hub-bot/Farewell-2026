@@ -1053,14 +1053,6 @@ body.edit-mode .edit-mode-ribbon{display:block}
       </div>
     </div>
 
-    <!-- ADD MORE STUDENTS CARD -->
-    <div class="student-card" style="border:2px dashed #d0c8b8;background:transparent;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:200px;cursor:pointer;color:#bbb;transition:.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='#d0c8b8';this.style.color='#bbb'">
-      <span style="font-size:2.5rem">➕</span>
-      <p style="font-size:.9rem;letter-spacing:1px;text-transform:uppercase">Add Student</p>
-    </div>
-
-  </div>
-</section>
 
 <!-- TEACHERS SECTION -->
 <section class="teachers-section" id="teachers">
@@ -1071,94 +1063,91 @@ body.edit-mode .edit-mode-ribbon{display:block}
   </div>
   <div class="teachers-grid">
 
-    <!-- TEACHER 1 -->
+    <!-- TEACHER 1: Sajid Iqbal -->
     <div class="teacher-card">
-      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
       <div class="teacher-pics">
-        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👩‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📚<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🎓<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
       </div>
       <div class="teacher-body">
-        <p class="teacher-name">[Teacher Name 1]</p>
-        <div class="teacher-degree">[M.Sc Mathematics]</div>
-        <p class="teacher-subject">Mathematics & Statistics</p>
+        <p class="teacher-name">Sajid Iqbal</p>
+        <div class="teacher-degree">M.Phil Mathematics</div>
+        <p class="teacher-subject">Mathematics & Physics</p>
         <div class="teacher-info-grid">
-          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.Sc, B.Ed</p></div>
-          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[12 Years]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">Ghulam Muhammad</p></div>
+          <div class="t-info"><p class="t-info-lbl">Age</p><p class="t-info-val">37 Years</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">New Model Town Stadium Road, Burewala</p></div>
+          <div class="t-info"><p class="t-info-lbl">Phone</p><p class="t-info-val">3011061839</p></div>
         </div>
-        <div class="teacher-quote">"Watching this class grow has been the greatest reward of my teaching career. Your curiosity and dedication will take you to heights I can only dream of. Go change the world — I know you will."</div>
-      </div>
-    </div>
-    <!-- TEACHER 2 -->
-    <div class="teacher-card">
-      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
-      <div class="teacher-pics">
-        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🔬<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">⚗️<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📖<div class="tp-overlay">📷<span>Upload</span></div></div>
-      </div>
-      <div class="teacher-body">
-        <p class="teacher-name">[Teacher Name 2]</p>
-        <div class="teacher-degree">[M.Sc Physics]</div>
-        <p class="teacher-subject">Physics & Chemistry</p>
-        <div class="teacher-info-grid">
-          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.Sc, Ph.D</p></div>
-          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[18 Years]</p></div>
-        </div>
-        <div class="teacher-quote">"Every experiment you ran in my lab taught you something beyond science — it taught you patience, precision, and perseverance. Take those lessons forward. The universe has a wonderful plan for each of you."</div>
+        <div class="teacher-quote">"Education is not the filling of a pail, but the lighting of a fire. Watching you grow in mathematics and physics has been the greatest joy of my teaching journey."</div>
       </div>
     </div>
 
-    <!-- TEACHER 3 -->
+    <!-- TEACHER 2: Abdul Rasheed Hafiz Muhammad Sadeeq -->
     <div class="teacher-card">
-      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
       <div class="teacher-pics">
-        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👩‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📖<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🕌<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">✍️<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📝<div class="tp-overlay">📷<span>Upload</span></div></div>
+      </div>
+      <div class="teacher-body">
+        <p class="teacher-name">Abdul Rasheed Hafiz Muhammad Sadeeq</p>
+        <div class="teacher-degree">M.A Arabic</div>
+        <p class="teacher-subject">Tarjamat-ul-Quran</p>
+        <div class="teacher-info-grid">
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">Marhum</p></div>
+          <div class="t-info"><p class="t-info-lbl">Age</p><p class="t-info-val">55 Years</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">Mujahid Colony</p></div>
+          <div class="t-info"><p class="t-info-lbl">Qualification</p><p class="t-info-val">M.A Arabic</p></div>
+        </div>
+        <div class="teacher-quote">"The Quran is a guide for all aspects of life. May the knowledge you've gained illuminate your path and bring blessings to your journey ahead."</div>
+      </div>
+    </div>
+
+    <!-- TEACHER 3: G A Raja -->
+    <div class="teacher-card">
+      <div class="teacher-pics">
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">⚽<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🥋<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🏆<div class="tp-overlay">📷<span>Upload</span></div></div>
+      </div>
+      <div class="teacher-body">
+        <p class="teacher-name">G A Raja</p>
+        <div class="teacher-degree">4th Dan Black Belt</div>
+        <p class="teacher-subject">Sports & Physical Education</p>
+        <div class="teacher-info-grid">
+          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">M. Tufail</p></div>
+          <div class="t-info"><p class="t-info-lbl">Age</p><p class="t-info-val">48 Years</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">Multan Road, Burewala</p></div>
+          <div class="t-info"><p class="t-info-lbl">Phone</p><p class="t-info-val">3007591855</p></div>
+        </div>
+        <div class="teacher-quote">"Champions are made in practice, not in competition. Your dedication and discipline on the field have been truly inspiring. Keep pushing your limits!"</div>
+      </div>
+    </div>
+
+    <!-- TEACHER 4: Naveed Ahmad -->
+    <div class="teacher-card">
+      <div class="teacher-pics">
+        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📐<div class="tp-overlay">📷<span>Upload</span></div></div>
+        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">📚<div class="tp-overlay">📷<span>Upload</span></div></div>
         <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🌍<div class="tp-overlay">📷<span>Upload</span></div></div>
       </div>
       <div class="teacher-body">
-        <p class="teacher-name">[Teacher Name 3]</p>
-        <div class="teacher-degree">[M.A English Literature]</div>
-        <p class="teacher-subject">English & Social Studies</p>
+        <p class="teacher-name">Naveed Ahmad</p>
+        <div class="teacher-degree">M.A Mathematics, B.S English</div>
+        <p class="teacher-subject">Studies & Mathematics</p>
         <div class="teacher-info-grid">
-          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.A, B.Ed</p></div>
-          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[9 Years]</p></div>
+          <div class="t-info"><p class="t-info-lbl">Age</p><p class="t-info-val">38 Years</p></div>
+          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">Chak 515 E.B, Pakistan</p></div>
+          <div class="t-info"><p class="t-info-lbl">Phone</p><p class="t-info-val">3080090515</p></div>
+          <div class="t-info"><p class="t-info-lbl">Qualification</p><p class="t-info-val">M.A Math, B.S English</p></div>
         </div>
-        <div class="teacher-quote">"Every word you wrote, every essay you crafted — told me a story of brilliant minds growing brighter. You were never just my students; you were my daily inspiration. Fly high, dear ones."</div>
-      </div>
-    </div>
-
-    <!-- TEACHER 4 -->
-    <div class="teacher-card">
-      <button class="del-btn" onclick="deleteCard(this,'teacher')" title="Delete Teacher">✕</button>
-      <div class="teacher-pics">
-        <div class="teacher-pic" style="font-size:3.5rem" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">👨‍🏫<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">💻<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🖥️<div class="tp-overlay">📷<span>Upload</span></div></div>
-        <div class="teacher-pic" onclick="triggerTeacherPic(this)"><input type="file" accept="image/*" style="display:none" onchange="handleTeacherPic(this)">🤖<div class="tp-overlay">📷<span>Upload</span></div></div>
-      </div>
-      <div class="teacher-body">
-        <p class="teacher-name">[Teacher Name 4]</p>
-        <div class="teacher-degree">[M.Sc Computer Science]</div>
-        <p class="teacher-subject">Computer Science & IT</p>
-        <div class="teacher-info-grid">
-          <div class="t-info"><p class="t-info-lbl">Father's Name</p><p class="t-info-val">[Father Name]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Address</p><p class="t-info-val">[City, Country]</p></div>
-          <div class="t-info"><p class="t-info-lbl">Degree</p><p class="t-info-val">M.Sc, MPhil</p></div>
-          <div class="t-info"><p class="t-info-lbl">Experience</p><p class="t-info-val">[7 Years]</p></div>
-        </div>
-        <div class="teacher-quote">"In this age of technology, you are the future builders of the digital world. I watched you debug your first programs, solve your first algorithms — and felt pride every single time. Keep building, keep creating."</div>
+        <div class="teacher-quote">"Mathematics is the language of the universe, and English opens doors to the world. You have mastered both beautifully. Go forth and achieve greatness!"</div>
       </div>
     </div>
 
